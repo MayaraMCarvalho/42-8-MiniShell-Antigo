@@ -6,7 +6,7 @@
 #    By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:52:33 by macarval          #+#    #+#              #
-#    Updated: 2023/02/22 19:20:22 by macarval         ###   ########.fr        #
+#    Updated: 2023/03/28 00:45:14 by macarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME_BONUS		= minishell_bonus
 FILE_PATH		= ./src
 FILE_PATH_BONUS	= ./src_bonus
 OBJS_PATH		= ./obj
-LIBFT_PATH		= libs/libft/
+LIBFT_PATH		= ./libs/libft
 
 HEADERS			= headers/minishell.h
 HEADERS_BONUS	= headers/minishell_bonus.h

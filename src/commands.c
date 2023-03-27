@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/03/13 19:23:47 by macarval         ###   ########.fr       */
+/*   Updated: 2023/03/28 00:46:14 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	is_command(t_shell shell)
 	if (exit_shell(shell))
 		exit(0);
 	else if (echo(shell))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 // int	pwd(void)
