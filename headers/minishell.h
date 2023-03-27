@@ -1,0 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
+/*   Updated: 2023/02/23 21:29:39 by macarval         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+# include <signal.h>
+# include <unistd.h>
+# include <stdlib.h> 
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libs/libft/libft.h"
+
+typedef struct s_shell
+{
+	char	*line;
+	char	*command;
+	char	*flag;
+	char	*content;
+	
+}	t_shell;
+
+// Commands
+char	*get_path(void);
+int		is_command(t_shell shell);
+int		exit_shell(t_shell shell);
+
+// Echo
+int		echo(t_shell shell);
+char	*process_text(t_shell shell);
+
+// Handle
+char	**handle_close(char *line);
+t_shell	make_shell(char *line);
+char	*handling(char *split);
+
+// Free
+void	free_split(char **split);
+int		size_split(char **split);
+
+#endif
