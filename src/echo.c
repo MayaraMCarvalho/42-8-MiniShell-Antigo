@@ -15,9 +15,7 @@
 int	echo(t_shell shell)
 {
 	int	isflag;
-	int	i;
 
-	i = 0;
 	isflag = 0;
 	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
 	{

@@ -25,8 +25,8 @@ t_shell	make_shell(char *line)
 		shell.flag = handling(split[1]);
 	if (size > 2)
 		shell.content = ft_strnstr(line, split[2], ft_strlen(line));
-	//free_split(split);
-	//free(line);
+	// free_split(split);
+	// free(line);
 	return (shell);
 }
 
