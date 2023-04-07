@@ -14,21 +14,45 @@
 
 int	is_command(t_shell shell)
 {
-	if (exit_shell(shell))
-		exit(0);
-	else if (echo(shell))
+	if (echo(shell))
 		return (0);
+	else if (pwd(shell))
+		return (0);
+	else if (exit_shell(shell))
+		exit(0);
 	return (1);
 }
 
-// int	pwd(void)
-// {
-// 	char	*path;
-// 	char	buf[256];
+int	echo(t_shell shell)
+{
+	int	isflag;
 
-// 	path = getcwd(buf, 256);
-// 	return (path);
-// }
+	isflag = 0;
+	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
+	{
+		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
+			isflag = 1;
+		printf("%s", shell.content);
+		if (isflag == 0)
+			printf("\n");
+		return (1);
+	}
+	return (0);
+}
+
+int	pwd(t_shell shell)
+{
+	char	*path;
+	char	buf[256];
+
+	if (!ft_strncmp(shell.command, "pwd", ft_strlen(shell.command)))
+	{
+		path = getcwd(buf, 256);
+		printf("%s\n", path);
+		return (1);
+	}
+	return (0);
+}
 
 int	exit_shell(t_shell shell)
 {

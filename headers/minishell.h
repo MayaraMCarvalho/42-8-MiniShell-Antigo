@@ -15,7 +15,7 @@
 
 # include <signal.h>
 # include <unistd.h>
-# include <stdlib.h> 
+# include <stdlib.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -30,12 +30,12 @@ typedef struct s_shell
 }	t_shell;
 
 // Commands
-char	*get_path(void);
+int		pwd(t_shell shell);
+int		echo(t_shell shell);
 int		is_command(t_shell shell);
 int		exit_shell(t_shell shell);
 
 // Echo
-int		echo(t_shell shell);
 char	*process_text(t_shell shell);
 
 // Handle
