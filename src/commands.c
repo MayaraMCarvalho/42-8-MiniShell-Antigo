@@ -16,9 +16,11 @@ int	is_command(t_shell shell)
 {
 	if (echo(shell))
 		return (0);
+	else if (cd(shell))
+		return (0);
 	else if (pwd(shell))
 		return (0);
-	else if (cd(shell))
+	else if (env(shell))
 		return (0);
 	else if (exit_shell(shell))
 		exit(0);
@@ -46,6 +48,22 @@ int	pwd(t_shell shell)
 		return (1);
 	}
 	return (0);
+}
+
+int	env(t_shell shell)
+{
+	int	i;
+
+	i = -1;
+	if (!ft_strncmp(shell.command, "env", ft_strlen(shell.command)))
+	{
+		while (shell.envp[++i] != NULL)
+		printf("%s\n", shell.envp[i]);
+		// printf("%s=%s\n", "SHELL", getenv("SHELL"));
+		return (1);
+	}
+	return (0);
+
 }
 
 int	exit_shell(t_shell shell)

@@ -64,3 +64,23 @@ char	*handling(char *split)
 // 	res[i] = '\0';
 // 	return (res);
 // }
+
+void	free_split(char **split)
+{
+	int	i;
+
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
+}
+
+int	size_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[++i])
+		i++;
+	return (i);
+}

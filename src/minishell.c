@@ -12,21 +12,29 @@
 
 #include "../headers/minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
+	char	*text;
 
+	if (argc && argv)
+	{}
+	shell.envp = envp;
 	while (1)
 	{
-		shell.line = readline("minishell>>$ ");
+
+		text = make_text();
+		shell.line = readline(text);
+		free(text);
 		if (shell.line)
 		{
 			add_history (shell.line);
 			//shell = make_shell(shell.line);
+
 			// Configuração de teste dos buildins
-			shell.command = ft_strdup("cd");
+			shell.command = ft_strdup("env");
 			shell.flag = ft_strdup("-n");
-			shell.content = ft_strdup("/home/mayara/42-MiniShell");
+			shell.content = ft_strdup("/home/mayara/42-MiniShell/src_bonus");
 			//
 			if (is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
@@ -36,22 +44,15 @@ int	main(void)
 	return (0);
 }
 
-void	free_split(char **split)
+char	*make_text(void)
 {
-	int	i;
+	char	*text;
+	char	buf[256];
+	char	*path;
 
-	i = -1;
-	while (split[++i])
-		free(split[i]);
-	free(split);
-}
-
-int	size_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[++i])
-		i++;
-	return (i);
+	path = getcwd(buf, 256);
+	path = ft_substr(path, ft_strlen(getenv("HOME")), ft_strlen(path));
+	text = ft_strjoin(path, "$ ");
+	free(path);
+	return (text);
 }
