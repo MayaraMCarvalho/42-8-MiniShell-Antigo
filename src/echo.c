@@ -12,6 +12,23 @@
 
 #include "../headers/minishell.h"
 
+int	echo(t_shell shell)
+{
+	int	isflag;
+
+	isflag = 0;
+	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
+	{
+		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
+			isflag = 1;
+		printf("%s", shell.content);
+		if (isflag == 0)
+			printf("\n");
+		return (1);
+	}
+	return (0);
+}
+
 // char	*process_text(t_shell shell, int tam)
 // {
 // 	char	*temp;

@@ -30,12 +30,13 @@ typedef struct s_shell
 }	t_shell;
 
 // Commands
+int		cd(t_shell shell);
 int		pwd(t_shell shell);
-int		echo(t_shell shell);
 int		is_command(t_shell shell);
 int		exit_shell(t_shell shell);
 
 // Echo
+int		echo(t_shell shell);
 char	*process_text(t_shell shell);
 
 // Handle

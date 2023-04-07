@@ -24,9 +24,9 @@ int	main(void)
 			add_history (shell.line);
 			//shell = make_shell(shell.line);
 			// Configuração de teste dos buildins
-			shell.command = ft_strdup("pwd");
+			shell.command = ft_strdup("cd");
 			shell.flag = ft_strdup("-n");
-			shell.content = ft_strdup("Teste de echo");
+			shell.content = ft_strdup("/home/mayara/42-MiniShell");
 			//
 			if (is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);

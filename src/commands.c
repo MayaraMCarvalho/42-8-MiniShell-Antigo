@@ -18,23 +18,19 @@ int	is_command(t_shell shell)
 		return (0);
 	else if (pwd(shell))
 		return (0);
+	else if (cd(shell))
+		return (0);
 	else if (exit_shell(shell))
 		exit(0);
 	return (1);
 }
 
-int	echo(t_shell shell)
+int	cd(t_shell shell)
 {
-	int	isflag;
-
-	isflag = 0;
-	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
+	if (!ft_strncmp(shell.command, "cd", ft_strlen(shell.command)))
 	{
-		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
-			isflag = 1;
-		printf("%s", shell.content);
-		if (isflag == 0)
-			printf("\n");
+		if (chdir(shell.content) != 0)
+    		printf("bash: cd: %s: No such file or directory\n", shell.content);
 		return (1);
 	}
 	return (0);
