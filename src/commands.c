@@ -20,6 +20,8 @@ int	is_command(t_shell shell)
 		return (0);
 	else if (pwd(shell))
 		return (0);
+	else if (unset(shell))
+		return (0);
 	else if (env(shell))
 		return (0);
 	else if (exit_shell(shell))
@@ -50,6 +52,35 @@ int	pwd(t_shell shell)
 	return (0);
 }
 
+int	unset(t_shell shell)
+{
+	int	i;
+	int	tam;
+
+	//Encontrar váriável e apagar
+	i = -1;
+	if (!ft_strncmp(shell.command, "unset", ft_strlen(shell.command)))
+		{
+			tam = ft_strlen(shell.content);
+			while (shell.envp[++i] != NULL)
+			{
+				if (!ft_strncmp(shell.envp[i], shell.content, tam))
+					break;
+			}
+			if (shell.envp[i] && shell.envp[i][tam] == '=')
+			{
+				while (shell.envp[i] != NULL)
+				{
+					shell.envp[i] = shell.envp[i + 1];
+					i++;
+				}
+			}
+			return (1);
+		}
+	return (0);
+
+}
+
 int	env(t_shell shell)
 {
 	int	i;
@@ -58,8 +89,7 @@ int	env(t_shell shell)
 	if (!ft_strncmp(shell.command, "env", ft_strlen(shell.command)))
 	{
 		while (shell.envp[++i] != NULL)
-		printf("%s\n", shell.envp[i]);
-		// printf("%s=%s\n", "SHELL", getenv("SHELL"));
+			printf("%s\n", shell.envp[i]);
 		return (1);
 	}
 	return (0);

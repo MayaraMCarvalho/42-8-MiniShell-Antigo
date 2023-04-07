@@ -32,9 +32,13 @@ int	main(int argc, char **argv, char **envp)
 			//shell = make_shell(shell.line);
 
 			// Configuração de teste dos buildins
-			shell.command = ft_strdup("env");
+			char	**split;
+
+			split = ft_split(shell.line, ' ');
+			shell.command = split[0];
 			shell.flag = ft_strdup("-n");
-			shell.content = ft_strdup("/home/mayara/42-MiniShell/src_bonus");
+			shell.content = split[1];
+
 			//
 			if (is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);

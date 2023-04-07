@@ -36,6 +36,7 @@ char	*make_text(void);
 int		cd(t_shell shell);
 int		env(t_shell shell);
 int		pwd(t_shell shell);
+int		unset(t_shell shell);
 int		is_command(t_shell shell);
 int		exit_shell(t_shell shell);
 
