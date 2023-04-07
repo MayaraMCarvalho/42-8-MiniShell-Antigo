@@ -19,15 +19,11 @@ int	echo(t_shell shell)
 	isflag = 0;
 	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
 	{
-		if (!ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
+		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
 			isflag = 1;
-		if (isflag == 1)
-			printf("%s", shell.content);
-		else
-		{
-			printf("%s %s", shell.flag, shell.content);
+		printf("%s", shell.content);
+		if (isflag == 0)
 			printf("\n");
-		}
 		return (1);
 	}
 	return (0);

@@ -22,7 +22,12 @@ int	main(void)
 		if (shell.line[0])
 		{
 			add_history (shell.line);
-			shell = make_shell(shell.line);
+			//shell = make_shell(shell.line);
+			// Configuração de teste dos buildins
+			shell.command = ft_strdup("echo");
+			shell.flag = ft_strdup("-n");
+			shell.content = ft_strdup("Teste de echo");
+			//
 			if (is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
 			free(shell.line);
