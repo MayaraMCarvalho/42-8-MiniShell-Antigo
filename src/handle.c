@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/02/23 21:36:12 by macarval         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:56:11 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_shell	make_shell(char *line)
 	return (shell);
 }
 
-char *handling(char *split)
+char	*handling(char *split)
 {
 	char	*res;
 	char	*temp;
@@ -40,9 +40,9 @@ char *handling(char *split)
 	res = NULL;
 	res = split;
 	temp = split;
-	if(temp[0] == '"')
+	if (temp[0] == '"')
 		res = ft_strtrim(split, "\"");
-	else if(temp[0] == '\'')
+	else if (temp[0] == '\'')
 		res = ft_strtrim(split, "'");
 	return (res);
 }

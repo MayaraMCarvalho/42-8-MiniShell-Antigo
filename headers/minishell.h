@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/02/23 21:29:39 by macarval         ###   ########.fr       */
+/*   Updated: 2023/04/07 14:55:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct s_shell
 	char	*command;
 	char	*flag;
 	char	*content;
-	
 }	t_shell;
 
 // Commands
