@@ -12,6 +12,8 @@
 
 #include "../headers/minishell.h"
 
+// Refazer make_shell para criar tabela de comandos
+
 t_shell	make_shell(char *line)
 {
 	char	**split;
