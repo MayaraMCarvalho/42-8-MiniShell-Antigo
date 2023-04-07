@@ -42,13 +42,11 @@ int	echo(t_shell shell)
 
 int	pwd(t_shell shell)
 {
-	char	*path;
 	char	buf[256];
 
 	if (!ft_strncmp(shell.command, "pwd", ft_strlen(shell.command)))
 	{
-		path = getcwd(buf, 256);
-		printf("%s\n", path);
+		printf("%s\n", getcwd(buf, 256));
 		return (1);
 	}
 	return (0);
@@ -62,9 +60,9 @@ int	exit_shell(t_shell shell)
 	if (!ft_strncmp(shell.command, "exit", ft_strlen(shell.command)))
 	{
 		control = 1;
-		// free(shell.command);
-		// free(shell.flag);
-		// free(shell.content);
+		free(shell.command);
+		free(shell.flag);
+		free(shell.content);
 		rl_clear_history();
 	}
 	return (control);

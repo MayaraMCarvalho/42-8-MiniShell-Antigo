@@ -19,14 +19,14 @@ int	main(void)
 	while (1)
 	{
 		shell.line = readline("minishell>>$ ");
-		if (shell.line[0])
+		if (shell.line)
 		{
 			add_history (shell.line);
 			//shell = make_shell(shell.line);
 			// Configuração de teste dos buildins
 			shell.command = ft_strdup("pwd");
-			//shell.flag = ft_strdup("-n");
-			//shell.content = ft_strdup("Teste de echo");
+			shell.flag = ft_strdup("-n");
+			shell.content = ft_strdup("Teste de echo");
 			//
 			if (is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
