@@ -20,6 +20,8 @@ int	is_command(t_shell shell)
 		return (0);
 	else if (pwd(shell))
 		return (0);
+	else if (export(shell))
+		return (0);
 	else if (unset(shell))
 		return (0);
 	else if (env(shell))
@@ -52,12 +54,31 @@ int	pwd(t_shell shell)
 	return (0);
 }
 
+int	export(t_shell shell)
+{
+	int	i;
+
+	i = -1;
+	if (!ft_strncmp(shell.command, "export", ft_strlen(shell.command)))
+	{
+		if (shell.content == NULL)
+		{
+			while (shell.envp[++i] != NULL)
+			// Colocar em ordem alfabética,
+			// printar as variáveis vazia e
+			// colocar o valor da variável entre ""
+				printf("declare -x %s\n", shell.envp[i]);
+		}
+		return (1);
+	}
+	return (0);
+}
+
 int	unset(t_shell shell)
 {
 	int	i;
 	int	tam;
 
-	//Encontrar váriável e apagar
 	i = -1;
 	if (!ft_strncmp(shell.command, "unset", ft_strlen(shell.command)))
 		{
