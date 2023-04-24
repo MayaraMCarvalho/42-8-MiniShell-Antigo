@@ -21,7 +21,8 @@ int	echo(t_shell shell)
 	{
 		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
 			isflag = 1;
-		printf("%s", shell.content);
+		if (shell.content)
+			printf("%s", shell.content);
 		if (isflag == 0)
 			printf("\n");
 		return (1);
