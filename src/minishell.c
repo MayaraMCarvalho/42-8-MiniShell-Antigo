@@ -23,7 +23,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		text = make_text();
-		printf("\033[1;35m");
 		shell.line = readline(text);
 		free(text);
 		if (shell.line)
@@ -40,9 +39,13 @@ int	main(int argc, char **argv, char **envp)
 			shell.content = split[1];
 			free(split);
 			//
+
 			if (shell.command && is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
 			free(shell.line);
+			free(shell.command);
+			free(shell.flag);
+			free(shell.content);
 		}
 	}
 	return (0);
