@@ -125,6 +125,7 @@ int	exit_shell(t_shell shell)
 	if (!ft_strncmp(shell.command, "exit", ft_strlen(shell.command)))
 	{
 		control = 1;
+		free(shell.line);
 		free(shell.command);
 		free(shell.flag);
 		free(shell.content);
