@@ -30,7 +30,10 @@ typedef struct s_shell
 	char	**envp;
 }	t_shell;
 
+// Minishell
 char	*make_text(void);
+void	inicialize(t_shell *shell);
+void	free_struct(t_shell shell);
 
 // Commands
 int		cd(t_shell shell);

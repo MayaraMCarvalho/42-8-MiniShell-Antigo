@@ -20,12 +20,13 @@ int	main(int argc, char **argv, char **envp)
 	if (argc && argv)
 	{}
 	shell.envp = envp;
+	inicialize(&shell);
 	while (1)
 	{
 		text = make_text();
 		shell.line = readline(text);
 		free(text);
-		if (shell.line)
+		if (shell.line[0] != '\0')
 		{
 			add_history (shell.line);
 			//shell = make_shell(shell.line);
@@ -36,17 +37,22 @@ int	main(int argc, char **argv, char **envp)
 			split = ft_split(shell.line, ' ');
 			shell.command = split[0];
 			shell.flag = ft_strdup("-n");
-			shell.content = split[1];
+			if (split[1])
+			{
+				shell.content = ft_substr(shell.line, ft_strlen(shell.command) + 1, ft_strlen(shell.line));
+				free(split[1]);
+			}
 			free(split);
+
 			//
 
 			if (shell.command && is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
-			free(shell.line);
-			free(shell.command);
-			free(shell.flag);
-			free(shell.content);
+			free_struct(shell);
+			inicialize(&shell);
 		}
+		else
+			free(shell.line);
 	}
 	return (0);
 }
@@ -74,4 +80,23 @@ char	*make_text(void)
 	text = ft_strjoin(temp1, "\001\033[1;0m\002$\001\033[0m\002 ");
 	free(temp1);
 	return (text);
+}
+
+void	inicialize(t_shell *shell)
+{
+	shell->line = NULL;
+	shell->command = NULL;
+	shell->flag = NULL;
+	shell->content = NULL;
+}
+
+void	free_struct(t_shell shell)
+{
+	free(shell.line);
+	if (shell.command)
+		free(shell.command);
+	if (shell.flag)
+		free(shell.flag);
+	if (shell.content)
+		free(shell.content);
 }

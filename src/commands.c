@@ -65,7 +65,7 @@ int	export(t_shell shell)
 		{
 			while (shell.envp[++i] != NULL)
 			// Colocar em ordem alfabética,
-			// printar as variáveis vazia e
+			// printar as variáveis vazias e
 			// colocar o valor da variável entre ""
 				printf("declare -x %s\n", shell.envp[i]);
 		}
@@ -125,10 +125,7 @@ int	exit_shell(t_shell shell)
 	if (!ft_strncmp(shell.command, "exit", ft_strlen(shell.command)))
 	{
 		control = 1;
-		free(shell.line);
-		free(shell.command);
-		free(shell.flag);
-		free(shell.content);
+		free_struct(shell);
 		rl_clear_history();
 	}
 	return (control);
