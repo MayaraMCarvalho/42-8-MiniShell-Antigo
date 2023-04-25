@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+#include "../headers/redirections.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,6 +36,8 @@ int	main(int argc, char **argv, char **envp)
 			char	**split;
 
 			split = ft_split(shell.line, ' ');
+			if (split[0] == '<')
+				redirections(split);
 			shell.command = split[0];
 			shell.flag = ft_strdup("-n");
 			shell.content = split[1];
