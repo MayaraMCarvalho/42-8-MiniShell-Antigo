@@ -26,7 +26,7 @@ typedef struct s_pipex
     pid_t   pid;
 }   t_pipex;
 
-char	**ft_split(t_pipex *pipex, char *s, char c);
+char	**split_commands(t_pipex *pipex, char *s, char c);
 
 char    *arg_trim(t_pipex *pipex, char *arg, int set, int mode);
 
