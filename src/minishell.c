@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 15:18:07 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:21:19 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc && argv)
 	{
 	}
-	shell.envp = envp;
 	while (1)
 	{
 		text = make_text();
@@ -30,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history (shell.line);
 			shell = make_shell(shell.line);
+			shell.envp = envp; // Como resolver p/ atualização correta?
 			if (shell.command && is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
 			free_struct(shell);

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 15:26:47 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:52:48 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	setenvp(t_shell shell, char *var, char *content);
 // Ls
 DIR		*get_folder(void);
 int		ls(t_shell shell);
+int		is_flag_ls(t_shell shell);
 int		get_number(t_shell shell);
 void	print_ls(DIR *folder, t_shell shell);
 
@@ -69,6 +70,7 @@ void	free_split(char ***split);
 int		size_split(char **split);
 
 // Flags
-int		is_flag(t_shell shell);
+int		is_flag_null(t_shell shell);
+char	verify_flags(t_shell shell, char *pattern);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:14:03 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:32 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:42:24 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	echo(t_shell shell)
 	isflag = 0;
 	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
 	{
-		if (!is_flag(shell))
-			return (0);
 		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
 			isflag = 1;
 		if (shell.content)

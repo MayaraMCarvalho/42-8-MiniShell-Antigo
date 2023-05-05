@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   commands.c                                         :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 17:14:24 by macarval         ###   ########.fr       */
+/*   Created: 2023/05/05 16:36:46 by macarval          #+#    #+#             */
+/*   Updated: 2023/05/05 17:14:30 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	is_command(t_shell shell)
+int	env(t_shell shell)
 {
-	if (echo(shell))
-		return (0);
-	else if (cd(shell))
-		return (0);
-	else if (pwd(shell))
-		return (0);
-	else if (export(shell))
-		return (0);
-	else if (unset(shell))
-		return (0);
-	else if (env(shell))
-		return (0);
-	else if (ls(shell))
-		return (0);
-	else if (clear(shell))
-		return (0);
-	else if (exit_shell(shell))
-		exit(0);
-	return (1);
+	int	i;
+
+	i = -1;
+	if (!ft_strncmp(shell.command, "env", ft_strlen(shell.command)))
+	{
+		if (!is_flag_null(shell))
+			return (1);
+		while (shell.envp[++i] != NULL)
+			printf("%s\n", shell.envp[i]);
+		return (1);
+	}
+	return (0);
 }

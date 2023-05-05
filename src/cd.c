@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 20:02:42 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 19:55:58 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:43:51 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	cd(t_shell shell)
 
 	if (!ft_strncmp(shell.command, "cd", ft_strlen(shell.command)))
 	{
-		if (!is_flag(shell))
-			return (0);
+		if (!is_flag_null(shell))
+			return (1);
 		if (!shell.content)
 			shell.content = getenv("HOME");
 		else if (!ft_strncmp(shell.content, "-", ft_strlen(shell.content)))
@@ -31,7 +31,7 @@ int	cd(t_shell shell)
 			printf("bash: cd: %s: No such file or directory\n", shell.content);
 		else
 		{
-			/* 
+			/*
 			// setenvp(shell, "OLDPWD", getenv("PWD"));
 			// printf("oldpwd: %s\n\n", getenv("OLDPWD"));
 			// printf("env: %s\n", shell.envp[31]);

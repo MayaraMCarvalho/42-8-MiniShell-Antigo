@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:23:24 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 15:42:25 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 16:34:56 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	ls(t_shell shell)
 
 	if (!ft_strncmp(shell.command, "ls", ft_strlen(shell.command)))
 	{
-		if (!is_flag(shell))
-			return (0);
+		if (!is_flag_ls(shell))
+			return (1);
 		folder = get_folder();
 		print_ls(folder, shell);
 		printf("\n");
@@ -27,6 +27,19 @@ int	ls(t_shell shell)
 		return (1);
 	}
 	return (0);
+}
+
+int	is_flag_ls(t_shell shell)
+{
+	char	letter;
+
+	letter = verify_flags(shell, "iam");
+	if (letter != '\0')
+	{
+		printf("%s: invalid option -- '%c'\n", shell.command, letter);
+		return (0);
+	}
+	return (1);
 }
 
 void	print_ls(DIR *folder, t_shell shell)
