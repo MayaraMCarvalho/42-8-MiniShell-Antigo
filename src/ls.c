@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:23:24 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:39 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:59:31 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ls(t_shell shell)
 			return (0);
 		folder = get_folder();
 		files = get_number(shell);
-		while ((entry = readdir(folder)))
+		entry = readdir(folder);
+		while (entry)
 		{
 			count++;
 			if (shell.flag[0] == '-'
@@ -36,11 +37,12 @@ int	ls(t_shell shell)
 				|| ft_strchr(shell.flag, 'a'))
 			{
 				printf("%s", entry->d_name);
-				if (ft_strchr(shell.flag, 'm') &&
-					count < files)
+				if (ft_strchr(shell.flag, 'm')
+					&& count < files)
 					printf(",");
 			}
 			printf(" ");
+			entry = readdir(folder);
 		}
 		printf("\n");
 		closedir(folder);
@@ -57,11 +59,13 @@ int	get_number(t_shell shell)
 
 	count = 0;
 	folder = get_folder();
-	while ((entry = readdir(folder)))
+	entry = readdir(folder);
+	while (entry)
 	{
 		if (entry->d_name[0] != '.'
-				|| ft_strchr(shell.flag, 'a'))
+			|| ft_strchr(shell.flag, 'a'))
 			count++;
+		entry = readdir(folder);
 	}
 	closedir(folder);
 	return (count);

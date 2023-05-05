@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 20:02:42 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/04 17:51:44 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 19:55:58 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ int	cd(t_shell shell)
 			printf("bash: cd: %s: No such file or directory\n", shell.content);
 		else
 		{
+			/* 
 			// setenvp(shell, "OLDPWD", getenv("PWD"));
-
 			// printf("oldpwd: %s\n\n", getenv("OLDPWD"));
 			// printf("env: %s\n", shell.envp[31]);
-
 			// setenvp(shell, "PWD", getcwd(buf, 256));
-
 			// printf("pwd: %s\n", getenv("PWD"));
 			// printf("env: %s\n", shell.envp[5]);
+			*/
 		}
 		return (1);
 	}
@@ -48,9 +47,9 @@ int	cd(t_shell shell)
 
 void	setenvp(t_shell shell, char *var, char *content)
 {
-	int	i;
-	int	tam;
-	char *temp;
+	int		i;
+	int		tam;
+	char	*temp;
 
 	i = -1;
 	tam = ft_strlen(var);
@@ -58,7 +57,7 @@ void	setenvp(t_shell shell, char *var, char *content)
 	{
 		if (!ft_strncmp(shell.envp[i], var, tam)
 			&& shell.envp[i][tam] == '=')
-			break;
+			break ;
 	}
 	if (shell.envp[i])
 	{
@@ -66,6 +65,8 @@ void	setenvp(t_shell shell, char *var, char *content)
 		temp = ft_strjoin(temp, content);
 		shell.envp[i] = temp;
 	}
+	/*
 	// printf("env: %i %s\n", i, shell.envp[i]);
 	// printf("var: %s\n", getenv(var));
+	*/
 }
