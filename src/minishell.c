@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/04 17:48:00 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:01:58 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	char	*text;
 
-	int i = 0;
-
 	if (argc && argv)
-	{}
+	{
+	}
 	shell.envp = envp;
 	while (1)
 	{
@@ -38,7 +37,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			free(shell.line);
-		i++;
 	}
 	return (0);
 }
@@ -74,15 +72,4 @@ void	inicialize(t_shell *shell)
 	shell->command = NULL;
 	shell->flag = NULL;
 	shell->content = NULL;
-}
-
-void	free_struct(t_shell shell)
-{
-	free(shell.line);
-	if (shell.command)
-		free(shell.command);
-	if (shell.flag)
-		free(shell.flag);
-	if (shell.content)
-		free(shell.content);
 }

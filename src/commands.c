@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 13:58:05 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:02:30 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ int	export(t_shell shell)
 		if (shell.content == NULL)
 		{
 			while (shell.envp[++i] != NULL)
+			/*
 			// Colocar em ordem alfabética,
 			// printar as variáveis vazias e
 			// colocar o valor da variável entre ""
+			*/
 				printf("declare -x %s\n", shell.envp[i]);
 		}
 		return (1);
@@ -85,7 +87,7 @@ int	unset(t_shell shell)
 		while (shell.envp[++i] != NULL)
 		{
 			if (!ft_strncmp(shell.envp[i], shell.content, tam))
-				break;
+				break ;
 		}
 		if (shell.envp[i] && shell.envp[i][tam] == '=')
 		{
@@ -98,7 +100,6 @@ int	unset(t_shell shell)
 		return (1);
 	}
 	return (0);
-
 }
 
 int	env(t_shell shell)
@@ -115,33 +116,4 @@ int	env(t_shell shell)
 		return (1);
 	}
 	return (0);
-
-}
-
-int	clear(t_shell shell)
-{
-	if (!ft_strncmp(shell.command, "clear", ft_strlen(shell.command)))
-	{
-		if (!is_flag(shell))
-			return (0);
-		printf("\033[2J\033[1;1H");
-		return (1);
-	}
-	return (0);
-}
-
-int	exit_shell(t_shell shell)
-{
-	int		control;
-
-	control = 0;
-	if (!ft_strncmp(shell.command, "exit", ft_strlen(shell.command)))
-	{
-		if (!is_flag(shell))
-			return (0);
-		control = 1;
-		free_struct(shell);
-		rl_clear_history();
-	}
-	return (control);
 }

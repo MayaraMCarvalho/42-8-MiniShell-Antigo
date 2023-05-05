@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 14:22:41 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 20:05:54 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ t_shell	make_shell(char *line)
 				free(shell.content);
 			if (shell.flag)
 				shell.content = ft_substr(line, tam_command
-								+ ft_strlen(shell.flag) + 2, ft_strlen(line));
+						+ ft_strlen(shell.flag) + 2, ft_strlen(line));
 			else
 				shell.content = ft_substr(line, tam_command + 1,
-								ft_strlen(line));
+						ft_strlen(line));
 		}
 	}
 	free(line);
 	free_split(&split);
-	//
+	/*
 
 	// char	**split;
 	// t_shell	shell;
@@ -67,6 +67,7 @@ t_shell	make_shell(char *line)
 	// 	shell.content = ft_strnstr(line, split[2], ft_strlen(line));
 	// free_split(split);
 	// free(line);
+	*/
 	return (shell);
 }
 
@@ -102,18 +103,6 @@ t_shell	make_shell(char *line)
 // 	res[i] = '\0';
 // 	return (res);
 // }
-
-void	free_split(char ***split)
-{
-	int		i;
-	char	**temp;
-
-	i = -1;
-	temp = *split;
-	while (temp[++i])
-		free(temp[i]);
-	free(*split);
-}
 
 // int	size_split(char **split)
 // {
