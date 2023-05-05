@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 18:08:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/04 16:10:48 by macarval         ###   ########.fr       */
+/*   Created: 2023/05/04 16:49:16 by macarval          #+#    #+#             */
+/*   Updated: 2023/05/05 13:57:29 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../headers/minishell.h"
 
-char	*ft_strchr(const char *str, int c)
+int	is_flag(t_shell shell)
 {
-	if (str != NULL)
-	{
-		while (*str != '\0')
-		{
-			if (*str == (char) c)
-				return ((char *)str);
-			str++;
-		}
-		if ((char) c == '\0' && *str == '\0')
-			return ((char *)str);
-	}
+	if (shell.command)
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:52:33 by macarval          #+#    #+#              #
-#    Updated: 2023/03/28 00:45:14 by macarval         ###   ########.fr        #
+#    Updated: 2023/05/05 13:56:47 by macarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ HEADERS_BONUS	= headers/minishell_bonus.h
 
 LIBFT			= $(LIBFT_PATH)/libft.a
 
-FILES			= minishell.c handle.c echo.c commands.c
+FILES			= minishell.c handle.c echo.c cd.c commands.c ls.c \
+				flags.c
+
 FILES_BONUS		= minishell_bonus.c
 
 IFLAGS			= -I./libs/libft
@@ -55,10 +57,10 @@ $(OBJS_PATH)/%.o: $(FILE_PATH)/%.c $(HEADERS)
 
 $(OBJS_PATH)/%.o: $(FILE_PATH_BONUS)/%.c $(HEADERS_BONUS)
 				@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
-			
+
 $(LIBFT):
 				@make -C $(LIBFT_PATH)
-					
+
 clean:
 				@$(RM) $(OBJS) $(OBJS_BONUS)
 				@echo "clean Done!"

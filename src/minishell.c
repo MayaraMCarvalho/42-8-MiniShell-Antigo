@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/04/07 14:55:31 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/04 17:48:00 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	shell;
 	char	*text;
 
+	int i = 0;
+
 	if (argc && argv)
 	{}
 	shell.envp = envp;
-	inicialize(&shell);
 	while (1)
 	{
 		text = make_text();
@@ -29,23 +30,7 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.line[0] != '\0')
 		{
 			add_history (shell.line);
-			//shell = make_shell(shell.line);
-
-			// Configuração de teste dos builtins
-			char	**split;
-
-			split = ft_split(shell.line, ' ');
-			shell.command = split[0];
-			shell.flag = ft_strdup("-n");
-			if (split[1])
-			{
-				shell.content = ft_substr(shell.line, ft_strlen(shell.command) + 1, ft_strlen(shell.line));
-				free(split[1]);
-			}
-			free(split);
-
-			//
-
+			shell = make_shell(shell.line);
 			if (shell.command && is_command(shell))
 				printf("bash: %s: command not found\n", shell.command);
 			free_struct(shell);
@@ -53,6 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			free(shell.line);
+		i++;
 	}
 	return (0);
 }
