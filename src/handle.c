@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 17:44:25 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:49:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_shell	make_shell(char *line)
 	{
 		if ((split[1][0] == '-'
 			&& ft_strncmp(shell.command, "echo", tam_command)))
-			printf("Entrou\n\n");
 		if ((split[1][0] == '-'
 			&& ft_strncmp(shell.command, "echo", tam_command))
 			|| (!ft_strncmp(shell.command, "echo", tam_command)
