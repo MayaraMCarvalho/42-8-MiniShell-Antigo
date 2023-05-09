@@ -98,15 +98,12 @@ static void	pipes(t_pipex *pipex)
 	}
 }
 
-void redirections( int argc, char **argv, char **e)
+void redirections(char **split, char **e)
 {
 	t_pipex	*pipex;
 
 	pipex = (t_pipex *)ft_calloc(1, sizeof(t_pipex));
-	if (argc < 5)
-		perror_free_exit(pipex, "Invalid number of arguments! \n", 31, 1);  
-    pipex->cmds = argc - 3;
-	pipex->argv = argv;
+	strlen(split);
     pipex->envp = e;
     pipex->args = (char ***)ft_calloc(argc - 3, sizeof(char **));
     pipex->cmd = (char **)ft_calloc(argc - 3, sizeof(char *));

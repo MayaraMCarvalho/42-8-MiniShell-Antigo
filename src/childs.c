@@ -1,4 +1,4 @@
-# include "pipex_bonus.h"
+#include "../headers/redirections.h"
 
 static void close_all(t_pipex *pipex, int set)
 {

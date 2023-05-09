@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 
 			split = ft_split(shell.line, ' ');
 			if (split[0] == '<')
-				redirections(split);
+				redirections(split, envp);
 			shell.command = split[0];
 			shell.flag = ft_strdup("-n");
 			shell.content = split[1];
