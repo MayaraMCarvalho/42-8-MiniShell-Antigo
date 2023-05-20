@@ -21,16 +21,41 @@
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
 
+# define SPACES " \n\t\r\f\v"
+# define SPECIALS "<>|"
+# define HEREDOCNAME ".tmp00"
+
+typedef struct s_cmd
+{
+	char	*command;
+	char	**args;
+}			t_cmd;
+
+typedef struct s_block
+{
+	int				set;
+	int				fd[2];
+	int				io1_type;
+	int				pipe[2];
+	char			*heredoc_name;
+	t_cmd			*command;
+	struct s_block	*next;
+	
+}					t_block;
+
 typedef struct s_shell
 {
-	char	*line;
-	char	*command;
-	char	*flag;
-	char	*content;
-	char	**envp;
-}	t_shell;
+	char		*line;
+	char		**envp;
+	t_block		*pipelist;
+}				t_shell;
 
+// base
+void 	minishell(t_shell *shell);
 char	*make_text(void);
+
+// Pipe_List
+t_block	*new_block_on_pipe_list(t_block *pipe_current);
 
 // Commands
 int		cd(t_shell shell);

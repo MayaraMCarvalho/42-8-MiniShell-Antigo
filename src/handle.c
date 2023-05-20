@@ -16,19 +16,21 @@
 
 t_shell	make_shell(char *line)
 {
-	char	**split;
+	// char	**split;
 	t_shell	shell;
-	int		size;
+	// int		size;
 
-	split = ft_split(line, ' ');
-	size = size_split(split);
-	shell.command = handling(split[0]);
-	if (size > 1)
-		shell.flag = handling(split[1]);
-	if (size > 2)
-		shell.content = ft_strnstr(line, split[2], ft_strlen(line));
+	// split = ft_split(line, ' ');
+	// size = size_split(split);
+	// shell.command = handling(split[0]);
+	// if (size > 1)
+	// 	shell.flag = handling(split[1]);
+	// if (size > 2)
+	// 	shell.content = ft_strnstr(line, split[2], ft_strlen(line));
 	// free_split(split);
 	// free(line);
+	if (line)
+		return (shell);
 	return (shell);
 }
 

@@ -23,7 +23,7 @@ HEADERS_BONUS	= headers/minishell_bonus.h
 
 LIBFT			= $(LIBFT_PATH)/libft.a
 
-FILES			= minishell.c handle.c echo.c commands.c
+FILES			= main.c minishell.c pipe_list.c
 FILES_BONUS		= minishell_bonus.c
 
 IFLAGS			= -I./libs/libft
