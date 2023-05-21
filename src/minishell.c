@@ -151,7 +151,7 @@ char	*make_text(void)
 	char	*temp2;
 
 	temp1 = ft_strjoin(getenv("LOGNAME"), "@");
-	temp2 = ft_strjoin(temp1, getenv("NAME"));
+	temp2 = ft_strjoin(temp1, getenv("USERNAME"));
 	free(temp1);
 	temp1 = ft_strjoin("\033[1;33m", temp2);
 	free(temp2);
@@ -174,9 +174,9 @@ void minishell(t_shell *shell)
 	{
 		printf("\033[1;35m");
 		line = readline(make_text());
-		if (shell->line)
+		if (line)
 		{
-			add_history(shell->line);
+			add_history(line);
 			process(shell->pipelist, line);
 		}
 	}

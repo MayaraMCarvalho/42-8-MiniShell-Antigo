@@ -45,7 +45,6 @@ typedef struct s_block
 
 typedef struct s_shell
 {
-	char		*line;
 	char		**envp;
 	t_block		*pipelist;
 }				t_shell;
