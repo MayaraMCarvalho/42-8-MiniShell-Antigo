@@ -6,20 +6,49 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 17:21:19 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:03:35 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
+/*
+	Teste de funções
+	char	*name;
+	char	*bp;
+	int		height;
+	int		width;
+
+	name = getenv("TERM");
+	bp = malloc(sizeof(*bp));
+	if (tgetent(bp, name) < 0)
+	{
+		fprintf(stderr, "Erro ao carregar as capacidades do terminal.\n");
+		return 1;
+	}
+	height = tgetnum ("li");
+	width = tgetnum ("co");
+	printf("H : %d\nL : %d\n", height, width);
+
+    if (tputs("Hello, world!\n", 1, putchar) == -1) {
+        fprintf(stderr, "Erro ao enviar a sequência para o terminal.\n");
+        return 1;
+    }
+	free (bp);
+	exit(0);
+*/
+
+// Passar norminette
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	shell;
-	char	*text;
+	t_shell		shell;
+	char		*text;
 
 	if (argc && argv)
 	{
 	}
+	shell.env = make_list(envp);
 	while (1)
 	{
 		text = make_text();
@@ -28,10 +57,9 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.line[0] != '\0')
 		{
 			add_history (shell.line);
-			shell = make_shell(shell.line);
-			shell.envp = envp; // Como resolver p/ atualização correta?
+			make_shell(&shell, shell.line);
 			if (shell.command && is_command(shell))
-				printf("bash: %s: command not found\n", shell.command);
+				printf("%s: command not found\n", shell.command);
 			free_struct(shell);
 			inicialize(&shell);
 		}
@@ -49,13 +77,7 @@ char	*make_text(void)
 	char	*temp1;
 	char	*temp2;
 
-	temp1 = ft_strjoin(getenv("LOGNAME"), "@");
-	temp2 = ft_strjoin(temp1, getenv("NAME"));
-	free(temp1);
-	temp1 = ft_strjoin("\033[1;33m", temp2);
-	free(temp2);
-	temp2 = ft_strjoin(temp1, "\033[1;0m:\033[1;35m~");
-	free(temp1);
+	temp2 = get_name();
 	path = getcwd(buf, 256);
 	path = ft_substr(path, ft_strlen(getenv("HOME")), ft_strlen(path));
 	temp1 = ft_strjoin(temp2, path);
@@ -64,6 +86,25 @@ char	*make_text(void)
 	text = ft_strjoin(temp1, "\001\033[1;0m\002$\001\033[0m\002 ");
 	free(temp1);
 	return (text);
+}
+
+char	*get_name(void)
+{
+	char	*temp1;
+	char	*temp2;
+	char	*user;
+
+	temp1 = ft_strjoin(getenv("LOGNAME"), "@");
+	user = getenv("USERNAME");
+	if(!user)
+		user = getenv("NAME");
+	temp2 = ft_strjoin(temp1, user);
+	free(temp1);
+	temp1 = ft_strjoin("\033[1;33m", temp2);
+	free(temp2);
+	temp2 = ft_strjoin(temp1, "\033[1;0m:\033[1;35m~");
+	free(temp1);
+	return (temp2);
 }
 
 void	inicialize(t_shell *shell)

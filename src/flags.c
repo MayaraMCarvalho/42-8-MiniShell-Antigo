@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:49:16 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 16:53:09 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:13:06 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	verify_flags(t_shell shell, char *pattern)
 {
-	int	i;
+	int		i;
 	char	letter;
 
 	i = 0;
@@ -37,8 +37,8 @@ int	is_flag_null(t_shell shell)
 	letter = verify_flags(shell, NULL);
 	if (letter != '\0')
 	{
-		if (!ft_strncmp(shell.command, "env", ft_strlen(shell.command))
-			|| !ft_strncmp(shell.command, "clear", ft_strlen(shell.command)))
+		if (!strcmp_mod(shell.command, "env")
+			|| !strcmp_mod(shell.command, "clear"))
 			printf("%s: invalid option -- '%c'\n", shell.command, letter);
 		else
 			printf("bash: %s: -%c: invalid option\n", shell.command, letter);

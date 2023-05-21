@@ -6,24 +6,30 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:14:03 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 16:42:24 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:14:14 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	echo(t_shell shell)
+// Passar norminette
+
+int	c_echo(t_shell shell)
 {
 	int	isflag;
 
 	isflag = 0;
-	if (!ft_strncmp(shell.command, "echo", ft_strlen(shell.command)))
+	if (!strcmp_mod(shell.command, "echo"))
 	{
-		if (shell.flag && !ft_strncmp(shell.flag, "-n", ft_strlen(shell.flag)))
+		// Alterar para imprimir variavel de ambiente
+			if (shell.env)
+			{}
+		//
+		if (shell.flag && !strcmp_mod(shell.flag, "-n"))
 			isflag = 1;
 		if (shell.content)
 		{
-			if (!ft_strncmp(shell.content, "$?", ft_strlen(shell.content)))
+			if (!strcmp_mod(shell.content, "$?"))
 				printf("%s", shell.content);//mudar
 			else
 				printf("%s", shell.content);

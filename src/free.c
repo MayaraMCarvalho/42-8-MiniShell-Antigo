@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 16:41:18 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/16 22:09:33 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,26 @@ void	free_split(char ***split)
 	free(*split);
 }
 
-int	clear(t_shell shell)
+void	free_list(t_lst *list)
 {
-	if (!ft_strncmp(shell.command, "clear", ft_strlen(shell.command)))
+	t_lst	*temp;
+	t_lst	*next;
+
+	temp = list;
+	while (temp != NULL)
+	{
+		free(temp->var);
+		if (temp->msg)
+			free(temp->msg);
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
+}
+
+int	c_clear(t_shell shell)
+{
+	if (!strcmp_mod(shell.command, "clear"))
 	{
 		if (!is_flag_null(shell))
 			return (1);
@@ -47,16 +64,17 @@ int	clear(t_shell shell)
 	return (0);
 }
 
-int	exit_shell(t_shell shell)
+int	c_exit(t_shell shell)
 {
 	int		control;
 
 	control = 0;
-	if (!ft_strncmp(shell.command, "exit", ft_strlen(shell.command)))
+	if (!strcmp_mod(shell.command, "exit"))
 	{
 		if (!is_flag_null(shell))
 			return (1);
 		control = 1;
+		free_list(shell.env);
 		free_struct(shell);
 		rl_clear_history();
 	}

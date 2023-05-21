@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/05 17:14:24 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/20 23:01:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,21 @@
 
 int	is_command(t_shell shell)
 {
-	if (echo(shell))
+	if (c_echo(shell))
 		return (0);
-	else if (cd(shell))
+	else if (c_cd(shell))
 		return (0);
-	else if (pwd(shell))
+	else if (c_pwd(shell))
 		return (0);
-	else if (export(shell))
+	else if (c_export(shell))
 		return (0);
-	else if (unset(shell))
+	else if (c_unset(shell))
 		return (0);
-	else if (env(shell))
+	else if (c_env(shell))
 		return (0);
-	else if (ls(shell))
+	else if (c_clear(shell))
 		return (0);
-	else if (clear(shell))
-		return (0);
-	else if (exit_shell(shell))
+	else if (c_exit(shell))
 		exit(0);
 	return (1);
 }

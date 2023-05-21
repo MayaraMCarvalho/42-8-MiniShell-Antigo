@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 15:59:38 by macarval          #+#    #+#             */
-/*   Updated: 2022/04/21 01:29:45 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/20 22:36:45 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ size_t	ft_strlen(const char *s)
 	size_t	r;
 
 	r = 0;
-	while (*s != '\0')
+	if (s != NULL)
 	{
-		s++;
-		r++;
+		while (*s != '\0')
+		{
+			s++;
+			r++;
+		}
 	}
 	return (r);
 }

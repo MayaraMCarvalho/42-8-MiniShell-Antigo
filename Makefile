@@ -6,7 +6,7 @@
 #    By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:52:33 by macarval          #+#    #+#              #
-#    Updated: 2023/05/05 16:38:15 by macarval         ###   ########.fr        #
+#    Updated: 2023/05/20 23:17:24 by macarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,13 @@ HEADERS_BONUS	= headers/minishell_bonus.h
 
 LIBFT			= $(LIBFT_PATH)/libft.a
 
-FILES			= minishell.c handle.c echo.c cd.c commands.c ls.c \
+FILES			= minishell.c utils.c handle.c echo.c cd.c commands.c \
 				flags.c free.c env.c export.c pwd.c unset.c
 
 FILES_BONUS		= minishell_bonus.c
 
 IFLAGS			= -I./libs/libft
-LFLAGS			= -L./libs/libft -lreadline -lft
+LFLAGS			= -L./libs/libft -lreadline -lft -ltermcap
 CFLAGS			= -Wall -Wextra -Werror -O3 -g3
 
 CC				= cc
