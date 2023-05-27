@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/20 23:12:07 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:31:10 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 
 # define GLOBAL 0
 # define LOCAL 1
+# define ENVP 2
+
+// typedef struct s_arg
+// {
+// 	char			*arg;
+// 	struct s_arg	*prev;
+// 	struct s_arg	*next;
+// }	t_arg
 
 typedef struct s_lst
 {
@@ -44,6 +52,35 @@ typedef struct s_shell
 	t_lst		*env;
 }	t_shell;
 
+// typedef struct s_block
+// {
+//     char            *heredoc_name;
+//     char            **args;
+//     char            *cmd;
+//     int                commands_n;
+//     int                fd[2];
+//     int                pipe[2];
+//     int                set;
+//     t_cmd            *commands;
+//     t_cmd            *current_command;
+//     struct s_block    *next;
+//     void            (*built_in)(void *shell, void *current);
+// }                    t_block;
+
+// typedef struct s_shell
+// {
+//     char        *cmd;
+//     char        **envp;
+//     char        **paths;
+//     char        *heredoc_name;
+//     int            count;
+//     int            paths_n;
+//     int            pipelist_n;
+//     int            std_io[2];
+//     pid_t        pid;
+//     t_block        *pipelist;
+// }                t_shell;
+
 // Minishell
 char		*get_name(void);
 char		*make_text(void);
@@ -53,18 +90,27 @@ void		free_struct(t_shell shell);
 // Commands
 int			c_pwd(t_shell shell);
 int			c_clear(t_shell shell);
-int			c_export(t_shell shell);
-int			is_command(t_shell shell);
 int			c_exit(t_shell shell);
+int			is_command(t_shell shell);
+
+// Args
+int			is_args(t_shell shell);
+t_lst		*find_arg(t_shell shell, char *var);
+void		apart_args(t_shell shell, char c, void (*function)(t_shell));
+
+// Export
+int			c_export(t_shell shell);
+void		add_export(t_shell shell);
+void		print_export(t_shell shell);
 
 // Unset
 int			c_unset(t_shell shell);
-void		remove_var(t_lst *env);
-t_lst		*find_var(t_shell shell);
+void		exe_unset(t_shell shell);
+
 
 // Cd
 int			c_cd(t_shell shell);
-void		setenvp(t_shell shell, char *var, char *content);
+void		update_var(t_shell shell, char *name, char *value);
 
 // Echo
 int			c_echo(t_shell shell);

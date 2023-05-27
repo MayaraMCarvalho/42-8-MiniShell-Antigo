@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/20 23:03:35 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/27 14:47:07 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*get_name(void)
 
 	temp1 = ft_strjoin(getenv("LOGNAME"), "@");
 	user = getenv("USERNAME");
-	if(!user)
+	if (!user)
 		user = getenv("NAME");
 	temp2 = ft_strjoin(temp1, user);
 	free(temp1);

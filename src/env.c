@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:36:46 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/20 23:14:00 by macarval         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:10:57 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	c_env(t_shell shell)
 			return (1);
 		while (shell.env != NULL)
 		{
-			if (shell.env->type == 0)
+			if (shell.env->type != LOCAL && shell.env->msg)
 				printf("%s=%s\n", shell.env->var, shell.env->msg);
 			shell.env = shell.env->next;
 		}
@@ -39,7 +39,7 @@ t_lst	*make_list(char **envp)
 	{
 		node = NULL;
 		node = insert_front(node,
-				strchr_rev(*envp, '='), strchr_mod(*envp, '='), GLOBAL);
+				strchr_rev(*envp, '='), strchr_mod(*envp, '='), ENVP);
 		insert_last(&env, node);
 		envp++;
 	}
