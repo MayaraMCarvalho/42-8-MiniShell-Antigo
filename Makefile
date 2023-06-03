@@ -6,7 +6,7 @@
 #    By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:52:33 by macarval          #+#    #+#              #
-#    Updated: 2023/05/27 17:25:15 by macarval         ###   ########.fr        #
+#    Updated: 2023/06/03 12:11:17 by macarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,9 @@ HEADERS_BONUS	= headers/minishell_bonus.h
 
 LIBFT			= $(LIBFT_PATH)/libft.a
 
-FILES			= minishell.c utils.c handle.c echo.c cd.c commands.c \
-				args.c flags.c free.c env.c export.c pwd.c unset.c
+FILES			= args.c cd.c commands.c echo.c env.c export.c \
+				flags.c free.c handle.c local.c minishell.c \
+				node.c unset.c utils.c
 
 FILES_BONUS		= minishell_bonus.c
 

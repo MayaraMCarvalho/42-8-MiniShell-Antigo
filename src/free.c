@@ -6,13 +6,13 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/16 22:09:33 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 17:25:55 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void	free_struct(t_shell shell)
+void	free_shell(t_shell shell)
 {
 	free(shell.line);
 	if (shell.command)
@@ -56,6 +56,7 @@ int	c_clear(t_shell shell)
 {
 	if (!strcmp_mod(shell.command, "clear"))
 	{
+		update_(shell);
 		if (!is_flag_null(shell))
 			return (1);
 		printf("\033[2J\033[1;1H");
@@ -75,7 +76,7 @@ int	c_exit(t_shell shell)
 			return (1);
 		control = 1;
 		free_list(shell.env);
-		free_struct(shell);
+		free_shell(shell);
 		rl_clear_history();
 	}
 	return (control);

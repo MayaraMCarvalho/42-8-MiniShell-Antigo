@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:21:16 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/27 17:31:38 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 16:48:21 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ t_lst	*find_arg(t_shell shell, char *var)
 
 int	is_args(t_shell shell)
 {
-	if (shell.content[0] == '=' || ft_isdigit(shell.content[0]))
+	if (shell.content[0] == '=' || !ft_isalpha(shell.content[0])
+		|| isalnum_mod(shell.content) || (!strcmp_mod(shell.command, "unset")
+			&& ft_strchr(shell.content, '=')))
 	{
 		printf("bash: %s: `%s': not a valid identifier\n",
 			shell.command, shell.content);
@@ -37,17 +39,31 @@ int	is_args(t_shell shell)
 	return (1);
 }
 
-void	apart_args(t_shell shell, char c, void (*function)(t_shell))
+void	apart_args(t_shell shell, char c, int (*function)(t_shell))
 {
 	int		i;
 	char	**split;
+	int		control;
 
 	i = -1;
-	split = ft_split(shell.content, c);
-	while (split[++i])
+	if (shell.content)
 	{
-		shell.content = split[i];
-		function(shell);
+		split = ft_split(shell.content, c);
+		if (function == add_local && is_args_local(split))
+		{
+			free_split(&split);
+			return ;
+		}
+		while (split[++i])
+		{
+			shell.content = split[i];
+			control = function(shell);
+			if (control == 1 && split[i + 1])
+				printf(" ");
+			if (control == 0 && !split[i + 1]
+				&& !strcmp_mod(shell.command, "echo"))
+				printf("\b");
+		}
+		free_split(&split);
 	}
-	free_split(&split);
 }

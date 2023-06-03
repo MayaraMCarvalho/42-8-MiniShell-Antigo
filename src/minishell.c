@@ -6,37 +6,11 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/05/27 14:47:07 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 17:08:12 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
-/*
-	Teste de funções
-	char	*name;
-	char	*bp;
-	int		height;
-	int		width;
-
-	name = getenv("TERM");
-	bp = malloc(sizeof(*bp));
-	if (tgetent(bp, name) < 0)
-	{
-		fprintf(stderr, "Erro ao carregar as capacidades do terminal.\n");
-		return 1;
-	}
-	height = tgetnum ("li");
-	width = tgetnum ("co");
-	printf("H : %d\nL : %d\n", height, width);
-
-    if (tputs("Hello, world!\n", 1, putchar) == -1) {
-        fprintf(stderr, "Erro ao enviar a sequência para o terminal.\n");
-        return 1;
-    }
-	free (bp);
-	exit(0);
-*/
 
 // Passar norminette
 
@@ -49,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 	}
 	shell.env = make_list(envp);
+	shell.exit_code = 0;
 	while (1)
 	{
 		text = make_text();
@@ -59,8 +34,13 @@ int	main(int argc, char **argv, char **envp)
 			add_history (shell.line);
 			make_shell(&shell, shell.line);
 			if (shell.command && is_command(shell))
+			{
 				printf("%s: command not found\n", shell.command);
-			free_struct(shell);
+				shell.exit_code = 127;
+			}
+			else
+				shell.exit_code = 0;
+			free_shell(shell);
 			inicialize(&shell);
 		}
 		else
