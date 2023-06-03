@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 17:23:31 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:31:36 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,12 @@ int			is_args_local(char	**split);
 char		*get_name(void);
 char		*make_text(void);
 void		inicialize(t_shell *shell);
+void		verify_builtins(t_shell *shell);
 
 // Node
 t_lst		*get_min(t_lst *env);
 t_lst		*remove_min(t_lst	*list, char *var);
-void		add_node(t_shell shell, t_lst *node, char *var, char *msg, int type);
+void		add_node(t_shell shell, t_lst *node, t_lst *new_node);
 
 // Unset
 int			c_unset(t_shell shell);

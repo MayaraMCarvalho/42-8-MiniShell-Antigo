@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 12:06:57 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 18:38:58 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:53:19 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	c_local(t_shell shell)
 int	add_local(t_shell shell)
 {
 	t_lst	*node;
+	t_lst	*new_node;
 	char	*var;
 	char	*msg;
 
@@ -34,7 +35,11 @@ int	add_local(t_shell shell)
 		var = ft_strdup(shell.content);
 	msg = strchr_mod(shell.content, '=');
 	node = find_arg(shell, var);
-	add_node(shell, node, var, msg, LOCAL);
+	new_node = NULL;
+	new_node = insert_front(new_node, var, msg, LOCAL);
+	add_node(shell, node, new_node);
+	free_list(new_node);
+	free(var);
 	return (0);
 }
 

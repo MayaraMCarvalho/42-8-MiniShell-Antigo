@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 17:08:12 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:26:19 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history (shell.line);
 			make_shell(&shell, shell.line);
-			if (shell.command && is_command(shell))
-			{
-				printf("%s: command not found\n", shell.command);
-				shell.exit_code = 127;
-			}
-			else
-				shell.exit_code = 0;
+			verify_builtins(&shell);
 			free_shell(shell);
 			inicialize(&shell);
 		}
@@ -93,4 +87,15 @@ void	inicialize(t_shell *shell)
 	shell->command = NULL;
 	shell->flag = NULL;
 	shell->content = NULL;
+}
+
+void	verify_builtins(t_shell *shell)
+{
+	if (shell->command && is_command(*shell))
+	{
+		printf("%s: command not found\n", shell->command);
+		shell->exit_code = 127;
+	}
+	else
+		shell->exit_code = 0;
 }

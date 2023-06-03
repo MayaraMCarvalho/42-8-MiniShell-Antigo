@@ -6,28 +6,26 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:41:11 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 09:56:53 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 19:48:16 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void	add_node(t_shell shell, t_lst *node, char *var, char *msg, int type)
+void	add_node(t_shell shell, t_lst *node, t_lst *new_node)
 {
 	if (node)
 	{
-		node->type = type;
-		free(var);
-		if (msg)
+		node->type = new_node->type;
+		if (new_node->msg)
 		{
 			free(node->msg);
-			node->msg = ft_strdup(msg);
+			node->msg = ft_strdup(new_node->msg);
 		}
 	}
 	else
 	{
-		node = insert_front(node, var, msg, type);
-		free(var);
+		node = insert_front(node, new_node->var, new_node->msg, new_node->type);
 		insert_last(&shell.env, node);
 	}
 }
