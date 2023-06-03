@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 18:43:11 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 20:14:58 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	is_command(t_shell shell)
 	else if (c_exit(shell))
 		exit(0);
 	else if (c_local(shell))
-		return(0);
+		return (0);
 	return (1);
 }
 
@@ -41,8 +41,8 @@ void	update_(t_shell shell)
 {
 	char	*var;
 
-	if (shell.content)
-		update_var(shell, "_", shell.content);
+	if (shell.content == NULL && ft_strchr(shell.command, '='))
+		update_var(shell, "_", NULL);
 	else
 	{
 		var = ft_strjoin("/usr/bin/", shell.command);

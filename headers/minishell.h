@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 19:31:36 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 20:08:55 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void		free_shell(t_shell shell);
 
 // Handle
 void		make_shell(t_shell *shell, char *line);
+void		handle(t_shell *shell,  char *line, char **split);
+void		put_split(t_shell *shell, char *line, char **split);
 
 // Local
 int			c_local(t_shell shell);
