@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 12:06:57 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 20:15:05 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/04 00:38:48 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	add_local(t_shell shell)
 	msg = strchr_mod(shell.content, '=');
 	node = find_arg(shell, var);
 	new_node = NULL;
-	new_node = insert_front(new_node, var, msg, LOCAL);
+	if (node)
+		new_node = insert_front(new_node, var, msg, GLOBAL);
+	else
+		new_node = insert_front(new_node, var, msg, LOCAL);
 	add_node(shell, node, new_node);
 	free_list(new_node);
 	free(var);
