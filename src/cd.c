@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 20:02:42 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 17:23:17 by macarval         ###   ########.fr       */
+/*   Updated: 2023/06/03 21:20:22 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	c_cd(t_shell shell)
 		update_(shell);
 		if (!is_flag_null(shell))
 			return (1);
-		if (!shell.content && !shell.flag)
+		if ((!shell.content || !strcmp_mod(shell.content, "~/")
+				|| !strcmp_mod(shell.content, "~")) && !shell.flag)
 			shell.content = getenv("HOME");
 		else if (!strcmp_mod(shell.flag, "-"))
 		{
