@@ -6,38 +6,31 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 20:08:42 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 19:38:13 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void	make_shell(t_shell *shell, char *line)
+void	make_shell(t_shell *shell)
 {
 	char	**split;
 
-	inicialize(shell);
-	split = ft_split(line, ' ');
-	handle(shell, line, split);
-	free_split(&split);
-	free(line);
-}
-
-void	handle(t_shell *shell, char *line, char **split)
-{
+	split = ft_split(shell->line, ' ');
 	if (!ft_strchr(split[0], '='))
 	{
 		shell->command = ft_strdup(split[0]);
-		put_split(shell, line, split);
+		put_split(shell, split);
 	}
 	else
 	{
-		shell->command = ft_strdup(line);
+		shell->command = ft_strdup(shell->line);
 		shell->content = NULL;
 	}
+	free_split(&split);
 }
 
-void	put_split(t_shell *shell, char *line, char **split)
+void	put_split(t_shell *shell, char **split)
 {
 	int		tam_command;
 
@@ -50,20 +43,18 @@ void	put_split(t_shell *shell, char *line, char **split)
 			&& !strcmp_mod(split[1], "-n")))
 			shell->flag = ft_strdup(split[1]);
 		else
-			shell->content = ft_substr(line, tam_command + 1,
-					ft_strlen(line));
+			shell->content = ft_substr(shell->line, tam_command + 1,
+					ft_strlen(shell->line));
 		if (!shell->content && split[2])
 		{
 			if (shell->content)
 				free(shell->content);
 			if (shell->flag)
-				shell->content = ft_substr(line, tam_command
-						+ ft_strlen(shell->flag) + 2, ft_strlen(line));
+				shell->content = ft_substr(shell->line, tam_command
+						+ ft_strlen(shell->flag) + 2, ft_strlen(shell->line));
 			else
-				shell->content = ft_substr(line, tam_command + 1,
-						ft_strlen(line));
+				shell->content = ft_substr(shell->line, tam_command + 1,
+						ft_strlen(shell->line));
 		}
 	}
 }
-// muitas linhas
-// ajustar para receber parametros.
