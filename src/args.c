@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:21:16 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 16:48:21 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 18:56:36 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,19 @@ t_lst	*find_arg(t_shell shell, char *var)
 
 int	is_args(t_shell shell)
 {
-	if (shell.content[0] == '=' || !ft_isalpha(shell.content[0])
-		|| isalnum_mod(shell.content) || (!strcmp_mod(shell.command, "unset")
-			&& ft_strchr(shell.content, '=')))
+	char	*content;
+	t_lst	*var;
+
+	content = shell.content;
+	if (content[0] == '=' || !ft_isalpha(content[0])
+		|| isalnum_mod(content) || (!strcmp_mod(shell.command, "unset")
+			&& ft_strchr(content, '=')))
 	{
+		var = find_arg(shell, content + 1);
+		if (content[0] == '$' && var)
+			content = var->msg;
 		printf("bash: %s: `%s': not a valid identifier\n",
-			shell.command, shell.content);
+			shell.command, content);
 		return (0);
 	}
 	return (1);

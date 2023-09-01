@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:36:10 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 19:53:14 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 19:05:19 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ int	c_export(t_shell shell)
 		update_(shell);
 		if (!is_flag_null(shell))
 			return (1);
-		if (!shell.content)
+		if (!shell.content
+			|| (shell.content[0] == '$'
+				&& !find_arg(shell, shell.content + 1)))
 			sort_export(shell.env);
 		else
 			apart_args(shell, ' ', add_export);

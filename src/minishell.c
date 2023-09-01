@@ -6,13 +6,11 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 13:40:58 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:15:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
-// Passar norminette
 
 int	main(int argc, char **argv, char **envp)
 {
