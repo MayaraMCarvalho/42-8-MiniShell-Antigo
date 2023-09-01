@@ -6,13 +6,11 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 14:11:07 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:14:10 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
-// Passar norminette
 
 int	is_command(t_shell shell)
 {
