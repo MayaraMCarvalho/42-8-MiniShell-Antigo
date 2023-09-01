@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 20:18:18 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 13:31:34 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		update_var(t_shell shell, char *name, char *value);
 // Commands
 int			c_pwd(t_shell shell);
 void		update_(t_shell shell);
+int			c_history(t_shell shell);
 int			is_command(t_shell shell);
 
 // Echo

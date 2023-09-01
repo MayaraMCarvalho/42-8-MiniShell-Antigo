@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 20:14:58 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 14:11:07 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ int	is_command(t_shell shell)
 		return (0);
 	else if (c_env(shell))
 		return (0);
-	else if (c_clear(shell))
-		return (0);
 	else if (c_exit(shell))
 		exit(0);
 	else if (c_local(shell))
+		return (0);
+	else if (c_clear(shell))
+		return (0);
+	else if (c_history(shell))
 		return (0);
 	return (1);
 }
@@ -60,6 +62,29 @@ int	c_pwd(t_shell shell)
 		if (!is_flag_null(shell))
 			return (1);
 		printf("%s\n", getcwd(buf, 256));
+		return (1);
+	}
+	return (0);
+}
+
+int	c_history(t_shell shell)
+{
+	HISTORY_STATE	*myhist;
+	HIST_ENTRY		**mylist;
+	int				i;
+
+	if (!strcmp_mod(shell.command, "history"))
+	{
+		myhist = history_get_history_state ();
+		mylist = history_list ();
+		i = 0;
+		while (i < myhist->length)
+		{
+			printf ("%5i  %s  %s\n",
+				i + 1, mylist[i]->line, mylist[i]->timestamp);
+			i++;
+		}
+		free (myhist);
 		return (1);
 	}
 	return (0);
