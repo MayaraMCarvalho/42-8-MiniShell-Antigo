@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:14:03 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 19:10:56 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:28:00 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	c_echo(t_shell shell)
 			printf("%i", shell.exit_code);
 		else
 			apart_args(shell, ' ', print_echo);
-		if (!shell.flag || strcmp_mod(shell.flag, "-n"))
+		if (!shell.flag || verify_flags(shell.flag, "-n"))
 			printf("\n");
 		return (1);
 	}

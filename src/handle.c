@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 19:38:13 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:44:32 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	put_split(t_shell *shell, char **split)
 	tam_command = ft_strlen(shell->command);
 	if (split[1])
 	{
-		if ((split[1][0] == '-'
-			&& strcmp_mod(shell->command, "echo"))
+		if (split[1][0] == '-'
+			&& (strcmp_mod(shell->command, "echo")
 			|| (!strcmp_mod(shell->command, "echo")
-			&& !strcmp_mod(split[1], "-n")))
+			&& !verify_flags(split[1] + 1, "n"))))
 			shell->flag = ft_strdup(split[1]);
 		else
 			shell->content = ft_substr(shell->line, tam_command + 1,

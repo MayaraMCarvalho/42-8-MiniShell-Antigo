@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 19:38:44 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:27:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int			add_export(t_shell shell);
 
 // Flags
 int			is_flag_null(t_shell shell);
-char		verify_flags(t_shell shell, char *pattern);
+char		verify_flags(char *flag, char *pattern);
 
 // Free
 int			c_exit(t_shell shell);

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 19:30:57 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/01 20:47:05 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	shell.env = make_list(envp);
 	shell.exit_code = 0;
-	while (1)
+	while (true)
 	{
 		text = make_text();
 		inicialize(&shell);
