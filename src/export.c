@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:36:10 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 19:05:19 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:06:51 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	add_export(t_shell shell)
 		var = strchr_rev(shell.content, '=');
 		if (!var)
 			var = ft_strdup(shell.content);
+		if (!var)
+			return (0);
 		msg = strchr_mod(shell.content, '=');
 		node = find_arg(shell, var);
 		new_node = NULL;

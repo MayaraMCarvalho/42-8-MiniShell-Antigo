@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 20:47:05 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:05:17 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	main(int argc, char **argv, char **envp)
 		text = make_text();
 		inicialize(&shell);
 		shell.line = readline(text);
-		free(text);
+		if (text != NULL)
+			free(text);
 		if (shell.line[0] != '\0')
 		{
 			add_history(shell.line);
 			make_shell(&shell);
-			verify_builtins(&shell);
+			verify_builtins(&shell); // Retirar // após lexer
 			free_shell(shell);
 		}
 		else

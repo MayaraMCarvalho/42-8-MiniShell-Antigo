@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 15:24:33 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 18:53:30 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:26:34 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ char	*strchr_mod(const char *str, int c)
 		while (*str != '\0')
 		{
 			if (*str == (char) c)
-			{
-				str++;
-				return ((char *)str);
-			}
+				return ((char *)(str + 1));
 			str++;
 		}
 		if ((char) c == '\0' && *str == '\0')
@@ -104,7 +101,7 @@ int	isalnum_mod(char *c)
 	r = 0;
 	while (c[++i] && r == 0)
 	{
-		if (!ft_isalnum(c[i]) && c[i] != '=')
+		if (!ft_isalnum(c[i]) && c[i] != '=' && c[i] != '_' && c[i] != '"')
 			r = 1;
 	}
 	return (r);

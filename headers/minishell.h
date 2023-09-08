@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 20:27:20 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:38:23 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define ENVP 0
 # define GLOBAL 1
 # define LOCAL 2
+# define CLEAR_SCREEN "\033[2J\033[1;1H"
 
 typedef struct s_lst
 {

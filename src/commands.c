@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/01 14:14:10 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:53:44 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ void	update_(t_shell shell)
 	else
 	{
 		var = ft_strjoin("/usr/bin/", shell.command);
-		update_var(shell, "_", var);
-		free(var);
+		if (var)
+		{
+			update_var(shell, "_", var);
+			free(var);
+		}
 	}
 }
 
@@ -73,16 +76,17 @@ int	c_history(t_shell shell)
 
 	if (!strcmp_mod(shell.command, "history"))
 	{
-		myhist = history_get_history_state ();
-		mylist = history_list ();
+		myhist = history_get_history_state();
+		mylist = history_list();
 		i = 0;
-		while (i < myhist->length)
+		while (myhist && myhist && i < myhist->length)
 		{
-			printf ("%5i  %s  %s\n",
+			printf("%5i  %s  %s\n",
 				i + 1, mylist[i]->line, mylist[i]->timestamp);
 			i++;
 		}
-		free (myhist);
+		if (myhist)
+			free (myhist);
 		return (1);
 	}
 	return (0);

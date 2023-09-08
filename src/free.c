@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 19:50:02 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 17:00:58 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	c_clear(t_shell shell)
 		update_(shell);
 		if (!is_flag_null(shell))
 			return (1);
-		printf("\033[2J\033[1;1H");
+		printf(CLEAR_SCREEN);
 		return (1);
 	}
 	return (0);

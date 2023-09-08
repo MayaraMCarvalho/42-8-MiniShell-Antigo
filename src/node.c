@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:41:11 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 19:48:16 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 16:18:12 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,23 @@ t_lst	*get_min(t_lst *env)
 	t_lst	*env_copy;
 	t_lst	*node;
 
-	node = env;
-	env_copy = env;
-	while (env_copy != NULL)
+	if (env)
 	{
-		if (env_copy->type != LOCAL)
+		node = env;
+		env_copy = env;
+		while (env_copy != NULL)
 		{
-			if (env_copy->next
-				&& (strcmp_order(node->var, env_copy->next->var)) > 0)
-				node = env_copy->next;
+			if (env_copy->type != LOCAL)
+			{
+				if (env_copy->next
+					&& (strcmp_order(node->var, env_copy->next->var)) > 0)
+					node = env_copy->next;
+			}
+			env_copy = env_copy->next;
 		}
-		env_copy = env_copy->next;
+		return (node);
 	}
-	return (node);
+	return (NULL);
 }
 
 t_lst	*remove_min(t_lst	*list, char *var)
