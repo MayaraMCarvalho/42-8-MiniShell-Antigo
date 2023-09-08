@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 20:02:42 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 21:20:22 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 20:09:04 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,15 @@ int	c_cd(t_shell shell)
 		else if (!strcmp_mod(shell.flag, "-"))
 		{
 			var = find_arg(shell, "OLDPWD");
-			shell.content = var->msg;
-			printf("%s\n", shell.content);
+			if (var)
+			{
+				shell.content = var->msg;
+				printf("%s\n", shell.content);
+			}
+			else
+				printf("bash: cd: OLDPWD not set\n");
 		}
-		exe_cd(shell);
+			exe_cd(shell);
 		return (1);
 	}
 	return (0);
@@ -41,12 +46,18 @@ void	exe_cd(t_shell shell)
 	t_lst	*var;
 	char	*oldpwd;
 	char	buf[256];
+	int		control;
 
+	control = -1;
 	var = find_arg(shell, "PWD");
 	oldpwd = var->msg;
-	if (chdir(shell.content) != 0)
+	if (shell.content)
+	{
+		control = chdir(shell.content);
+		if (control == -1)
 		printf("bash: cd: %s: No such file or directory\n", shell.content);
-	else
+	}
+	if (control == 0)
 	{
 		update_var(shell, "OLDPWD", oldpwd);
 		update_var(shell, "PWD", getcwd(buf, 256));
@@ -56,11 +67,18 @@ void	exe_cd(t_shell shell)
 void	update_var(t_shell shell, char *name, char *value)
 {
 	t_lst	*lst;
+	t_lst	*node;
 
 	lst = find_arg(shell, name);
 	if (lst)
 	{
 		free(lst->msg);
 		lst->msg = ft_strdup(value);
+	}
+	else
+	{
+		node = NULL;
+		node = insert_front(node, name, value, ENVP);
+		insert_last(&shell.env, node);
 	}
 }

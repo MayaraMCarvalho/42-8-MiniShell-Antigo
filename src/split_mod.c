@@ -1,0 +1,129 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_mod.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/08 17:26:28 by macarval          #+#    #+#             */
+/*   Updated: 2023/09/08 20:49:44 by macarval         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../headers/minishell.h"
+
+const char	*verify_quotes(const char *str)
+{
+	char	quote;
+
+	if (*str == '\'' || *str == '"')
+	{
+		quote = *str;
+		while (*str++ && *str != quote)
+			;
+	}
+	return (str);
+}
+
+size_t	quantity_words(const char *str, char c)
+{
+	int		control;
+	size_t	len;
+
+	control = 0;
+	len = 0;
+	if (!str[0])
+		return (0);
+	while (*str && *str == c)
+		str++;
+	while (*str)
+	{
+		if (*str != c)
+		{
+			str = verify_quotes(str);
+			if (control == 0)
+			{
+				control = 1;
+				len++;
+			}
+		}
+		else if (*str == c)
+			control = 0;
+		str++;
+	}
+	return (len);
+}
+
+size_t	len_word(const char *str, char c, size_t len)
+{
+	size_t	tam;
+	char	quote;
+
+	if (!str)
+		return (1);
+	tam = 0;
+	while (str[len] != c && str[len])
+	{
+		if (str[len] == '\'' || str[len] == '"')
+		{
+			quote = str[len];
+			len++;
+			while (str[len++] && str[len] != quote)
+				tam++;
+			tam += 2;
+		}
+		tam++;
+		len++;
+	}
+	return (tam);
+}
+
+char	*copy_word(const char *s, char c, size_t len)
+{
+	size_t	j;
+	size_t	i;
+	char	*str;
+
+	j = 0;
+	i = len_word(s, c, len);
+	str = malloc ((i + 1) * sizeof(char));
+	if (!str)
+	{
+		free(str);
+		return (NULL);
+	}
+	while (j < i)
+	{
+		str[j] = s[len + j];
+		j++;
+	}
+	str[j] = '\0';
+	return (str);
+}
+
+char	**ft_split_mod(char const *s, char c)
+{
+	size_t	j;
+	size_t	len;
+	char	**str;
+	size_t	words;
+
+	j = 0;
+	len = 0;
+	if (!s)
+		return (NULL);
+	words = quantity_words(s, c);
+	str = (char **) malloc ((words + 1) * sizeof(char *));
+	if (!str)
+		return (NULL);
+	while (j < words)
+	{
+		while (s[len] == c && s[len])
+			len++;
+		str[j] = copy_word(s, c, len);
+		j++;
+		len += len_word(s, c, len);
+	}
+	str[j] = 0;
+	return (str);
+}

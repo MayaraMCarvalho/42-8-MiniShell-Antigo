@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 16:38:23 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:34:31 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ char		verify_flags(char *flag, char *pattern);
 int			c_exit(t_shell shell);
 int			c_clear(t_shell shell);
 void		free_list(t_lst *list);
-void		free_split(char ***split);
+void		free_array(char ***token);
 void		free_shell(t_shell shell);
 
-// Handle
+// Handling
 void		make_shell(t_shell *shell);
-void		put_split(t_shell *shell, char **split);
+void		put_token(t_shell *shell, char **token);
 
 // Local
 int			c_local(t_shell shell);
 int			add_local(t_shell shell);
-int			is_args_local(char	**split);
+int			is_args_local(char	**token);
 
 // Minishell
 char		*get_name(void);
@@ -112,6 +112,17 @@ void		verify_builtins(t_shell *shell);
 t_lst		*get_min(t_lst *env);
 t_lst		*remove_min(t_lst	*list, char *var);
 void		add_node(t_shell shell, t_lst *node, t_lst *new_node);
+
+// Split_mod
+const char	*verify_quotes(const char *str);
+char		**ft_split_mod(char const *s, char c);
+size_t		quantity_words(const char *str, char c);
+size_t		len_word(const char *str, char c, size_t len);
+char		*copy_word(const char *s, char c, size_t len);
+
+// Tokenization
+char		**tokenization(t_shell *shell);
+void		remove_quotes(char **token);
 
 // Unset
 int			c_unset(t_shell shell);

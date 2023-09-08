@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 17:00:58 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/08 19:15:48 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ void	free_shell(t_shell shell)
 		free(shell.content);
 }
 
-void	free_split(char ***split)
+void	free_array(char ***array)
 {
 	int		i;
 	char	**temp;
 
 	i = -1;
-	temp = *split;
+	temp = *array;
 	while (temp[++i])
 		free(temp[i]);
-	free(*split);
+	free(*array);
 }
 
 void	free_list(t_lst *list)
