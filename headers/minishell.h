@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 19:34:31 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:15:35 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@
 # define GLOBAL 1
 # define LOCAL 2
 # define CLEAR_SCREEN "\033[2J\033[1;1H"
+# define COMMAND "command"
+# define BUILTIN "builtin"
+# define CONTENT "content"
+# define FLAG "flag"
+# define FILE "file"
+# define OPERATOR "operator"
+# define PIPE "pipe"
+
+typedef struct s_lex
+{
+	char			*token;
+	char			*type;
+}	t_lex;
 
 typedef struct s_lst
 {
@@ -76,6 +89,10 @@ t_lst		*duplicate_env(t_lst *env);
 void		insert_last(t_lst **lst, t_lst *new);
 t_lst		*insert_front(t_lst *new, char *var, char *msg, int type);
 
+// Exit
+int			c_exit(t_shell shell);
+int			c_clear(t_shell shell);
+
 // Export
 int			c_export(t_shell shell);
 void		sort_export(t_lst *env);
@@ -87,15 +104,19 @@ int			is_flag_null(t_shell shell);
 char		verify_flags(char *flag, char *pattern);
 
 // Free
-int			c_exit(t_shell shell);
-int			c_clear(t_shell shell);
 void		free_list(t_lst *list);
 void		free_array(char ***token);
 void		free_shell(t_shell shell);
+void		free_double(char ****array);
 
 // Handling
 void		make_shell(t_shell *shell);
 void		put_token(t_shell *shell, char **token);
+
+// Lexer
+char		***lexer(char	**token);
+char		***malloc_lexer(int size);
+void		copy_token(char ***lex, char **token);
 
 // Local
 int			c_local(t_shell shell);
@@ -113,14 +134,23 @@ t_lst		*get_min(t_lst *env);
 t_lst		*remove_min(t_lst	*list, char *var);
 void		add_node(t_shell shell, t_lst *node, t_lst *new_node);
 
+// Quotes
+int			verify_quotes(const char *str);
+int			quotes_close(const char *str);
+
 // Split_mod
-const char	*verify_quotes(const char *str);
 char		**ft_split_mod(char const *s, char c);
 size_t		quantity_words(const char *str, char c);
 size_t		len_word(const char *str, char c, size_t len);
 char		*copy_word(const char *s, char c, size_t len);
 
+// Strtrim_mod
+size_t		init(char *s1, char *set);
+size_t		final(char *s1, char *set);
+char		*strtrim_mod(char *s1, char *set);
+
 // Tokenization
+int			token_size(char **token);
 char		**tokenization(t_shell *shell);
 void		remove_quotes(char **token);
 

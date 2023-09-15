@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:29:27 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 20:52:35 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:44:05 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	remove_quotes(char **token)
 	quote[1] = '\0';
 	while (*token)
 	{
-		if (*token[0] == '\'' || *token[0] == '"')
+		if (quotes_close(*token)
+			&& (*token[0] == '\'' || *token[0] == '"'))
 		{
 			quote[0] = *token[0];
 			temp = ft_strtrim(*token, quote);
@@ -38,4 +39,14 @@ void	remove_quotes(char **token)
 		}
 		token++;
 	}
+}
+
+int	token_size(char **token)
+{
+	int	i;
+
+	i = 0;
+	while (token[i])
+		i++;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 19:15:48 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/14 19:05:59 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ void	free_array(char ***array)
 	free(*array);
 }
 
+void	free_double(char ****array)
+{
+	int		i;
+	char	***temp;
+
+	i = -1;
+	temp = *array;
+	while (temp[++i])
+	{
+		free(temp[i][0]);
+		free(temp[i][1]);
+		free(temp[i]);
+	}
+	free(*array);
+}
+
 void	free_list(t_lst *list)
 {
 	t_lst	*temp;
@@ -50,34 +66,4 @@ void	free_list(t_lst *list)
 		free(temp);
 		temp = next;
 	}
-}
-
-int	c_clear(t_shell shell)
-{
-	if (!strcmp_mod(shell.command, "clear"))
-	{
-		update_(shell);
-		if (!is_flag_null(shell))
-			return (1);
-		printf(CLEAR_SCREEN);
-		return (1);
-	}
-	return (0);
-}
-
-int	c_exit(t_shell shell)
-{
-	int		control;
-
-	control = 0;
-	if (!strcmp_mod(shell.command, "exit"))
-	{
-		if (!is_flag_null(shell))
-			return (1);
-		control = 1;
-		free_list(shell.env);
-		free_shell(shell);
-		rl_clear_history();
-	}
-	return (control);
 }

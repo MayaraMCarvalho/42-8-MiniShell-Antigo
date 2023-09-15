@@ -6,24 +6,11 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:26:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 20:49:44 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/15 19:33:17 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
-const char	*verify_quotes(const char *str)
-{
-	char	quote;
-
-	if (*str == '\'' || *str == '"')
-	{
-		quote = *str;
-		while (*str++ && *str != quote)
-			;
-	}
-	return (str);
-}
 
 size_t	quantity_words(const char *str, char c)
 {
@@ -32,7 +19,7 @@ size_t	quantity_words(const char *str, char c)
 
 	control = 0;
 	len = 0;
-	if (!str[0])
+	if (!str || !str[0])
 		return (0);
 	while (*str && *str == c)
 		str++;
@@ -40,7 +27,8 @@ size_t	quantity_words(const char *str, char c)
 	{
 		if (*str != c)
 		{
-			str = verify_quotes(str);
+			if (quotes_close(str))
+				str += verify_quotes(str);
 			if (control == 0)
 			{
 				control = 1;
@@ -58,15 +46,19 @@ size_t	len_word(const char *str, char c, size_t len)
 {
 	size_t	tam;
 	char	quote;
+	int		control;
 
 	if (!str)
 		return (1);
 	tam = 0;
+	control = quotes_close(str);
 	while (str[len] != c && str[len])
 	{
-		if (str[len] == '\'' || str[len] == '"')
+		if (control && (str[len] == '\'' || str[len] == '"'))
 		{
 			quote = str[len];
+			if (!str[len + 1] || str[len + 1] == quote)
+				return (0);
 			len++;
 			while (str[len++] && str[len] != quote)
 				tam++;
@@ -87,7 +79,7 @@ char	*copy_word(const char *s, char c, size_t len)
 	j = 0;
 	i = len_word(s, c, len);
 	str = malloc ((i + 1) * sizeof(char));
-	if (!str)
+	if (!str || i == 0)
 	{
 		free(str);
 		return (NULL);
@@ -110,11 +102,9 @@ char	**ft_split_mod(char const *s, char c)
 
 	j = 0;
 	len = 0;
-	if (!s)
-		return (NULL);
 	words = quantity_words(s, c);
 	str = (char **) malloc ((words + 1) * sizeof(char *));
-	if (!str)
+	if (!str || words == 0)
 		return (NULL);
 	while (j < words)
 	{
