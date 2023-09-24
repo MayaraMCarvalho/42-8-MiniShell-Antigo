@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 17:26:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/15 19:33:17 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/23 21:05:49 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,28 @@
 
 size_t	quantity_words(const char *str, char c)
 {
+	size_t	len;
+
+	if (!str || !str[0])
+		return (0);
+	while (*str && *str == c)
+		str++;
+	len = counter(str, c);
+	return (len);
+}
+
+int	counter(const char *str, char c)
+{
 	int		control;
 	size_t	len;
 
 	control = 0;
 	len = 0;
-	if (!str || !str[0])
-		return (0);
-	while (*str && *str == c)
-		str++;
 	while (*str)
 	{
 		if (*str != c)
 		{
-			if (quotes_close(str))
+			if (quotes_close(str) > 0)
 				str += verify_quotes(str);
 			if (control == 0)
 			{
@@ -54,7 +62,7 @@ size_t	len_word(const char *str, char c, size_t len)
 	control = quotes_close(str);
 	while (str[len] != c && str[len])
 	{
-		if (control && (str[len] == '\'' || str[len] == '"'))
+		if (control > 0 && (str[len] == '\'' || str[len] == '"'))
 		{
 			quote = str[len];
 			if (!str[len + 1] || str[len + 1] == quote)
@@ -105,7 +113,10 @@ char	**ft_split_mod(char const *s, char c)
 	words = quantity_words(s, c);
 	str = (char **) malloc ((words + 1) * sizeof(char *));
 	if (!str || words == 0)
+	{
+		free(str);
 		return (NULL);
+	}
 	while (j < words)
 	{
 		while (s[len] == c && s[len])

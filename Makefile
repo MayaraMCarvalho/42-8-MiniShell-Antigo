@@ -6,7 +6,7 @@
 #    By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/20 15:52:33 by macarval          #+#    #+#              #
-#    Updated: 2023/09/15 19:00:33 by macarval         ###   ########.fr        #
+#    Updated: 2023/09/23 20:49:57 by macarval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBFT			= $(LIBFT_PATH)/libft.a
 FILES			= args.c cd.c commands.c echo.c env.c exit.c \
 				export.c flags.c free.c handling.c lexer.c \
 				local.c minishell.c node.c quotes.c split_mod.c \
-				strtrim_mod.c tokenization.c unset.c utils.c
+				strcmp.c strtrim_mod.c token.c unset.c utils.c
 
 FILES_BONUS		= minishell_bonus.c
 

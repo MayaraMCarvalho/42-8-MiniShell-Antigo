@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/15 19:15:35 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/23 21:35:00 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <dirent.h>
 # include <term.h>
 # include <curses.h>
+# include <sys/stat.h>
+# include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libs/libft/libft.h"
@@ -28,13 +30,15 @@
 # define GLOBAL 1
 # define LOCAL 2
 # define CLEAR_SCREEN "\033[2J\033[1;1H"
-# define COMMAND "command"
-# define BUILTIN "builtin"
-# define CONTENT "content"
-# define FLAG "flag"
-# define FILE "file"
-# define OPERATOR "operator"
-# define PIPE "pipe"
+
+# define FLAG "FLAG"
+# define FILE "FILE"
+# define PIPE "PIPE"
+# define COMMAND "COMMAND"
+# define BUILTIN "BUILTIN"
+# define CONTENT "CONTENT"
+# define OPERATOR "OPERATOR"
+
 
 typedef struct s_lex
 {
@@ -116,7 +120,9 @@ void		put_token(t_shell *shell, char **token);
 // Lexer
 char		***lexer(char	**token);
 char		***malloc_lexer(int size);
-void		copy_token(char ***lex, char **token);
+
+// Lists
+int			verify_list(char *token, char **list);
 
 // Local
 int			c_local(t_shell shell);
@@ -135,24 +141,34 @@ t_lst		*remove_min(t_lst	*list, char *var);
 void		add_node(t_shell shell, t_lst *node, t_lst *new_node);
 
 // Quotes
-int			verify_quotes(const char *str);
+void		remove_quotes(char **token);
 int			quotes_close(const char *str);
+int			verify_quotes(const char *str);
+void		clear_quotes(char **token, char *temp);
 
 // Split_mod
+int			counter(const char *str, char c);
 char		**ft_split_mod(char const *s, char c);
 size_t		quantity_words(const char *str, char c);
 size_t		len_word(const char *str, char c, size_t len);
 char		*copy_word(const char *s, char c, size_t len);
+
+// Strcmp
+int			strcmp_mod(const char *s1, const char *s2);
+int			strcmp_rev(const char *s1, const char *s2);
+int			strcmp_order(const char *s1, const char *s2);
 
 // Strtrim_mod
 size_t		init(char *s1, char *set);
 size_t		final(char *s1, char *set);
 char		*strtrim_mod(char *s1, char *set);
 
-// Tokenization
+// Token
+char		*id_token(char *token);
 int			token_size(char **token);
+int			verify_commands(char *token);
 char		**tokenization(t_shell *shell);
-void		remove_quotes(char **token);
+void		copy_token(char ***lex, char **token);
 
 // Unset
 int			c_unset(t_shell shell);
@@ -162,7 +178,5 @@ int			exe_unset(t_shell shell);
 int			isalnum_mod(char *c);
 char		*strchr_mod(const char *str, int c);
 char		*strchr_rev(const char *str, int c);
-int			strcmp_order(const char *s1, const char *s2);
-int			strcmp_mod(const char *s1, const char *s2);
 
 #endif

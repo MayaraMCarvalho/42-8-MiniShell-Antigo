@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/15 16:50:36 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/23 21:00:17 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ void	make_shell(t_shell *shell)
 	lex = lexer(token);
 	if (!lex)
 		return ;
+
 	/* retirar */
 	int i = -1;
 	while (lex[++i])
-		printf("%s %i ->  %s\n", lex[i][1], i + 1, lex[i][0]);
+		printf("%-10s %-10s\n", lex[i][1], lex[i][0]);
 	printf("\n");
-	/**/// Fazer o parsing correto;
-	if (!ft_strchr(token[0], '='))
+	/**/
+
+	// Fazer o parsing correto;
+	if (token[0] && !ft_strchr(token[0], '='))
 	{
 		shell->command = ft_strdup(token[0]);
 		put_token(shell, token);
