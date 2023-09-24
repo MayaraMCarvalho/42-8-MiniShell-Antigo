@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 18:59:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/23 21:15:24 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/23 21:49:42 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,18 @@ void	clear_quotes(char **token, char *temp)
 
 	i = 0;
 	j = 0;
-	while ((*token) && (*token)[i++])
+	while ((*token) && (*token)[i])
 	{
 		if ((*token)[i] && ((*token)[i] == '\'' || (*token)[i] == '"'))
 		{
-			quote = (*token)[i++];
+			quote = (*token)[i];
+			i++;
 			while ((*token)[i] && (*token)[i] != quote)
 				temp[j++] = (*token)[i++];
 		}
 		else
 			temp[j++] = (*token)[i];
+		i++;
 	}
 	temp[j] = '\0';
 	free(*token);
