@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/24 21:38:42 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:45:42 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_shell
 // Args
 int			is_args(t_shell shell);
 t_lst		*find_arg(t_shell shell, char *var);
+char		*apart_var(t_shell *shell, char *token);
 void		apart_args(t_shell shell, char c, int (*function)(t_shell));
 
 // Cd
@@ -137,11 +138,17 @@ t_lst		*get_min(t_lst *env);
 t_lst		*remove_min(t_lst	*list, char *var);
 void		add_node(t_shell shell, t_lst *node, t_lst *new_node);
 
+// Quotes_Void
+int			check_void(char *str, int i);
+char		*remove_quotes_void(char *str);
+void		clear_quotes(char **token, char *temp);
+
 // Quotes
+int			quotes_void(char *str);
 void		remove_quotes(char **token);
 int			quotes_close(const char *str);
 int			verify_quotes(const char *str);
-void		clear_quotes(char **token, char *temp);
+
 
 // Split_mod
 int			counter(const char *str, char c);
@@ -163,7 +170,7 @@ char		*strtrim_mod(char *s1, char *set);
 // Token
 char		*id_token(char *token);
 int			token_size(char **token);
-char		**tokenization(t_shell *shell);
+char		**tokenization(char *line);
 void		copy_token(char ***lex, char **token);
 
 // Unset

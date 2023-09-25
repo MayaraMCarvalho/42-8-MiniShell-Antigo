@@ -6,18 +6,19 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:29:27 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/24 21:32:55 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:32:03 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-char	**tokenization(t_shell *shell)
+char	**tokenization(char *line)
 {
 	char	**token;
 
-	token = ft_split_mod(shell->line, ' ');
+	token = ft_split_mod(line, ' ');
 	remove_quotes(token);
+	free(line);
 	return (token);
 }
 

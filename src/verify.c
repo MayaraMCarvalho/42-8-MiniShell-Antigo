@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:35:31 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/24 21:32:23 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:29:20 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	verify_commands(char *token)
 		temp = ft_strjoin(split[i], "/");
 		path = ft_strjoin(temp, token);
 		free(temp);
-		if (!access(path, X_OK))
+		if (strcmp_mod(token, "com")
+			&& !access(path, X_OK))
 		{
 			free_array(&split);
 			free(path);

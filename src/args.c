@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 17:21:16 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 20:30:11 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:22:09 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,31 @@ void	apart_args(t_shell shell, char c, int (*function)(t_shell))
 		}
 		free_array(&split);
 	}
+}
+
+char	*apart_var(t_shell *shell, char *token)
+{
+	int		i;
+	char	**split;
+	char	*temp;
+	char	*temp2;
+	char	*str;
+
+	i = -1;
+	str = NULL;
+	if (token)
+	{
+		split = ft_split(token, '$');
+		while (split[++i])
+		{
+			temp = get_var(split[i], shell);
+			temp2 = ft_strjoin(str, temp);
+			free(str);
+			free(temp);
+			str = ft_strdup(temp2);
+			free(temp2);
+		}
+		free_array(&split);
+	}
+	return (str);
 }
