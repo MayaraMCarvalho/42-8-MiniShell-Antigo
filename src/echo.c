@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:14:03 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/23 20:57:37 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/24 20:55:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,42 +31,6 @@ int	c_echo(t_shell shell)
 
 int	print_echo(t_shell shell)
 {
-	char	*find;
-	char	*temp;
-
-	if (shell.content && shell.content[0] == '$')
-		return (print_var(shell));
-	else
-	{
-		find = ft_strchr(shell.content, '$');
-		if (find == NULL)
-			printf("%s", shell.content);
-		else
-		{
-			temp = strchr_rev(shell.content, '$');
-			printf("%s", temp);
-			free(temp);
-			if (!strcmp_mod(find, "$"))
-				printf("$");
-			else
-			{
-				shell.content = find;
-				print_var(shell);
-			}
-		}
-		return (1);
-	}
-}
-
-int	print_var(t_shell shell)
-{
-	t_lst	*node;
-
-	node = find_arg(shell, ++shell.content);
-	if (node && node->msg)
-	{
-		printf("%s", node->msg);
-		return (1);
-	}
-	return (0);
+	printf("%s", shell.content);
+	return (1);
 }

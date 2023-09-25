@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 18:59:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/23 21:49:42 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/24 21:39:26 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,18 @@ int	quotes_close(const char *str)
 
 void	remove_quotes(char **token)
 {
-	char	*temp;
-	int		tam;
-	int		pair_quotes;
+	char		*temp;
+	int			tam;
+	const int	pair_quotes = 2;
+	int			control;
+	char		*test;
 
-	pair_quotes = 2;
+	control = 1;
 	while (*token)
 	{
 		tam = quotes_close((*token));
-		if (tam > 0)
+		test = ft_strchr(*token, '=');
+		if (tam > 0 && (control || !test || (test && test[1] != '"')))
 		{
 			tam = ft_strlen(*token) - (pair_quotes * tam);
 			temp = (char *) malloc ((tam + 1) * sizeof(char));
@@ -71,6 +74,8 @@ void	remove_quotes(char **token)
 				return ;
 			clear_quotes(token, temp);
 		}
+		if (!strcmp_mod(*token, "export"))
+			control = 0;
 		token++;
 	}
 }

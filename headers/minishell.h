@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/23 21:35:00 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/24 21:38:42 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # define BUILTIN "BUILTIN"
 # define CONTENT "CONTENT"
 # define OPERATOR "OPERATOR"
-
 
 typedef struct s_lex
 {
@@ -83,7 +82,6 @@ int			is_command(t_shell shell);
 
 // Echo
 int			c_echo(t_shell shell);
-int			print_var(t_shell shell);
 int			print_echo(t_shell shell);
 
 // Env
@@ -115,14 +113,13 @@ void		free_double(char ****array);
 
 // Handling
 void		make_shell(t_shell *shell);
+char		*get_var(char *token, t_shell *shell);
 void		put_token(t_shell *shell, char **token);
+void		verify_expasion(char	***lex, t_shell *shell);
 
 // Lexer
 char		***lexer(char	**token);
 char		***malloc_lexer(int size);
-
-// Lists
-int			verify_list(char *token, char **list);
 
 // Local
 int			c_local(t_shell shell);
@@ -166,7 +163,6 @@ char		*strtrim_mod(char *s1, char *set);
 // Token
 char		*id_token(char *token);
 int			token_size(char **token);
-int			verify_commands(char *token);
 char		**tokenization(t_shell *shell);
 void		copy_token(char ***lex, char **token);
 
@@ -178,5 +174,9 @@ int			exe_unset(t_shell shell);
 int			isalnum_mod(char *c);
 char		*strchr_mod(const char *str, int c);
 char		*strchr_rev(const char *str, int c);
+
+// Verify
+int			verify_commands(char *token);
+int			verify_list(char *token, char **list);
 
 #endif
