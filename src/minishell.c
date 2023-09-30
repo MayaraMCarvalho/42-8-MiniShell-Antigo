@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/15 19:46:17 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/26 20:55:41 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,17 @@ int	main(int argc, char **argv, char **envp)
 
 	shell.env = make_list(envp);
 	shell.exit_code = 0;
+	text = NULL;
 	while (true && argc && argv)
 	{
 		text = make_text();
 		inicialize(&shell);
 		shell.line = strtrim_mod(readline(text), " ");
-		if (text != NULL)
-			free(text);
+		free(text);
 		if (shell.line[0] != '\0')
 		{
 			add_history(shell.line);
 			make_shell(&shell);
-			verify_builtins(&shell);
 			free_shell(shell);
 		}
 		else

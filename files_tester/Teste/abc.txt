@@ -1,0 +1,12 @@
+Makefile
+Teste
+headers
+libs
+minishell
+obj
+out.txt
+readline.supp
+src
+src_bonus
+test_script.sh
+teste.txt

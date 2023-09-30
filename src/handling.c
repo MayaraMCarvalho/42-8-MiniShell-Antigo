@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/25 18:35:16 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/29 23:42:35 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,29 @@
 
 void	make_shell(t_shell *shell)
 {
-	char	*line;
-	char	**token;
 	char	***lex;
 
 	if (!check_void(shell->line, 0))
 	{
-		line = remove_quotes_void(shell->line);
-		token = tokenization(line);
-		lex = lexer(token);
-		if (!lex)
+		lex = tokenization(shell);
+		if (syntax_error_check(lex))
+		{
+			free_double(&lex);
 			return ;
-		verify_expasion(lex, shell);
+		}
 		/* retirar */
 		int i = -1;
 		while (lex[++i])
 			printf("%-10s %-10s\n", lex[i][1], lex[i][0]);
-		printf("\n");
+		//printf("\n");
 		/**/
 		// Fazer o parsing correto e retirar abaixo;
-		if (token[0])
+		if (lex[0][0] && !strcmp_mod(lex[0][0], "exit"))
 		{
-			shell->command = ft_strdup(token[0]);
-			put_token(shell, token);
+			shell->command = ft_strdup(lex[0][0]);
+			// put_token(shell, token);
 		}
 		/**/
-		free_array(&token); // Mandar para lexer após parsing correto
 		free_double(&lex);
 	}
 	else
@@ -47,6 +44,7 @@ void	make_shell(t_shell *shell)
 		shell->command = ft_strdup(shell->line);
 		shell->content = NULL;
 	}
+	verify_builtins(shell);
 }
 
 void	put_token(t_shell *shell, char **token)
@@ -76,55 +74,4 @@ void	put_token(t_shell *shell, char **token)
 						ft_strlen(shell->line));
 		}
 	}
-}
-
-void	verify_expasion(char	***lex, t_shell *shell)
-{
-	int		i;
-	char	*init;
-	char	*var;
-	char	*content;
-
-	i = 0;
-	while (lex[i])
-	{
-		if (!strcmp_mod(lex[i][1], CONTENT)
-			&& ft_strchr(lex[i][0], '$') && lex[i][0][1])
-		{
-			init = strchr_rev(lex[i][0], '$');
-			var = apart_var(shell, ft_strchr(lex[i][0], '$'));
-			if (var)
-				content = ft_strjoin(init, var);
-			else
-				content = ft_strdup(init);
-			free(var);
-			free(lex[i][0]);
-			lex[i][0] = ft_strdup(content);
-			free(content);
-			free(init);
-		}
-		i++;
-	}
-}
-
-char	*get_var(char *token, t_shell *shell)
-{
-	t_lst	*node;
-	char	*final;
-	char	*var;
-	int		i;
-
-	i = 1;
-	while (ft_isalnum(token[i]))
-		i++;
-	final = ft_substr(token, i, ft_strlen(token) - i);
-	var = ft_substr(token, 0, i);
-	node = find_arg(*shell, var);
-	free(var);
-	if (node && node->msg)
-		var = ft_strjoin(node->msg, final);
-	else
-		var = ft_strdup(final);
-	free(final);
-	return (var);
 }

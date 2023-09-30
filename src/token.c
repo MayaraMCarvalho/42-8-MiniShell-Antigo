@@ -6,20 +6,29 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:29:27 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/25 18:32:03 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/26 21:18:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-char	**tokenization(char *line)
+char	***tokenization(t_shell *shell)
 {
+	char	*line;
+	char	***lex;
 	char	**token;
 
+	line = remove_quotes_void(shell->line);
 	token = ft_split_mod(line, ' ');
-	remove_quotes(token);
 	free(line);
-	return (token);
+	verify_expasion(token, shell);
+	remove_quotes(token);
+	//Separar pipes e redirections
+	lex = lexer(token);
+	if (!lex)
+		return (NULL);
+	free_array(&token);
+	return (lex);
 }
 
 int	token_size(char **token)
@@ -55,7 +64,8 @@ char	*id_token(char *token)
 	else if (ft_strchr(token, ' ') != NULL)
 		return (CONTENT);
 	else if (verify_list(token,
-			ft_split("echo cd pwd export unset env exit clear", ' ')))
+			ft_split("echo cd pwd export unset env exit clear history",
+			' ')))
 		return (BUILTIN);
 	else if (verify_commands(token))
 		return (COMMAND);

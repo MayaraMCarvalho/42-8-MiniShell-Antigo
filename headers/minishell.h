@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/25 17:45:42 by macarval         ###   ########.fr       */
+/*   Updated: 2023/09/29 09:43:16 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_shell
 // Args
 int			is_args(t_shell shell);
 t_lst		*find_arg(t_shell shell, char *var);
-char		*apart_var(t_shell *shell, char *token);
 void		apart_args(t_shell shell, char c, int (*function)(t_shell));
 
 // Cd
@@ -96,6 +95,13 @@ t_lst		*insert_front(t_lst *new, char *var, char *msg, int type);
 int			c_exit(t_shell shell);
 int			c_clear(t_shell shell);
 
+// Expansion
+int			verify_literal(char *token);
+char		*get_var(char *token, t_shell *shell);
+char		*apart_var(t_shell *shell, char *token);
+void		verify_expasion(char **token, t_shell *shell);
+
+
 // Export
 int			c_export(t_shell shell);
 void		sort_export(t_lst *env);
@@ -114,9 +120,7 @@ void		free_double(char ****array);
 
 // Handling
 void		make_shell(t_shell *shell);
-char		*get_var(char *token, t_shell *shell);
 void		put_token(t_shell *shell, char **token);
-void		verify_expasion(char	***lex, t_shell *shell);
 
 // Lexer
 char		***lexer(char	**token);
@@ -149,7 +153,6 @@ void		remove_quotes(char **token);
 int			quotes_close(const char *str);
 int			verify_quotes(const char *str);
 
-
 // Split_mod
 int			counter(const char *str, char c);
 char		**ft_split_mod(char const *s, char c);
@@ -167,10 +170,22 @@ size_t		init(char *s1, char *set);
 size_t		final(char *s1, char *set);
 char		*strtrim_mod(char *s1, char *set);
 
+// Syntax
+void		error_syntax(char	*text);
+int			check_prev_next(char	***lex, int	i);
+int			syntax_error_check(char	***lex);
+int			check_operator(char	***lex, int	i);
+int			check_input_redirection(char **text);
+int			check_output_redirection(char **text);
+int			validate_name_file(char	*name);
+int			check_permission(char *text, int permission, char *exit);
+int			check_folder(char *text);
+int			check_file(char *text);
+
 // Token
 char		*id_token(char *token);
 int			token_size(char **token);
-char		**tokenization(char *line);
+char		***tokenization(t_shell *shell);
 void		copy_token(char ***lex, char **token);
 
 // Unset
