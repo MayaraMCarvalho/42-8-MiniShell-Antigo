@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/14 19:05:59 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:06:28 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	free_shell(t_shell shell)
 		free(shell.flag);
 	if (shell.content)
 		free(shell.content);
+	if (shell.lex)
+		free_double(&shell.lex);
 }
 
 void	free_array(char ***array)

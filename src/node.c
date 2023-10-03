@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:41:11 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 16:18:12 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/02 09:29:02 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_lst	*get_min(t_lst *env)
 	return (NULL);
 }
 
-t_lst	*remove_min(t_lst	*list, char *var)
+t_lst	*remove_min(t_lst *list, char *var)
 {
 	t_lst	*temp;
 	t_lst	*prev;

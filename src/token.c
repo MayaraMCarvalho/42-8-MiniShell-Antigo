@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:29:27 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/26 21:18:18 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:43:40 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,16 @@ void	copy_token(char ***lex, char **token)
 
 char	*id_token(char *token)
 {
-	if (!strcmp_rev(token, ".txt")
-		|| !strcmp_rev(token, ".c"))
+	char	*str;
+
+	str = ft_strrchr(token, '.');
+	if (!strcmp_mod(str, ".txt")
+		|| !strcmp_mod(str, ".c"))
 		return (FILE);
 	else if (ft_strchr(token, ' ') != NULL)
 		return (CONTENT);
 	else if (verify_list(token,
-			ft_split("echo cd pwd export unset env exit clear history",
-			' ')))
+			ft_split("echo cd pwd export unset env exit clear history", ' ')))
 		return (BUILTIN);
 	else if (verify_commands(token))
 		return (COMMAND);

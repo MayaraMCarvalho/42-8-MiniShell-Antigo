@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 12:06:57 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 17:08:27 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/02 09:29:32 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	add_local(t_shell shell)
 	return (0);
 }
 
-int	is_args_local(char	**split)
+int	is_args_local(char **split)
 {
 	int	i;
 

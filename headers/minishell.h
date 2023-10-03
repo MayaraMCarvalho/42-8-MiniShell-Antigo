@@ -6,24 +6,25 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/29 09:43:16 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:46:59 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <term.h>
+# include <errno.h>
+# include <stdio.h>
 # include <signal.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <dirent.h>
-# include <term.h>
 # include <curses.h>
 # include <sys/stat.h>
 # include <sys/types.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 # include "../libs/libft/libft.h"
 
 # define ENVP 0
@@ -43,6 +44,8 @@ typedef struct s_lex
 {
 	char			*token;
 	char			*type;
+	struct s_lex	*prev;
+	struct s_lex	*next;
 }	t_lex;
 
 typedef struct s_lst
@@ -57,6 +60,7 @@ typedef struct s_lst
 typedef struct s_shell
 {
 	char		*line;
+	char		***lex;
 	char		*command;
 	char		*flag;
 	char		*content;
@@ -73,6 +77,13 @@ void		apart_args(t_shell shell, char c, int (*function)(t_shell));
 int			c_cd(t_shell shell);
 void		exe_cd(t_shell shell);
 void		update_var(t_shell shell, char *name, char *value);
+
+// Check
+int			check_file(char *text);
+int			check_folder(char *text);
+int			check_name_file(char *name);
+int			check_prev_next(char ***lex, int i);
+int			check_permission(char *text, int permission, char *exit);
 
 // Commands
 int			c_pwd(t_shell shell);
@@ -101,7 +112,6 @@ char		*get_var(char *token, t_shell *shell);
 char		*apart_var(t_shell *shell, char *token);
 void		verify_expasion(char **token, t_shell *shell);
 
-
 // Export
 int			c_export(t_shell shell);
 void		sort_export(t_lst *env);
@@ -119,17 +129,20 @@ void		free_shell(t_shell shell);
 void		free_double(char ****array);
 
 // Handling
+void		error_syntax(char *text);
 void		make_shell(t_shell *shell);
-void		put_token(t_shell *shell, char **token);
+int			syntax_error_check(char ***lex);
+int			check_pipe(char ***lex, int i);
+int			check_operator(char ***lex, int i);
 
 // Lexer
-char		***lexer(char	**token);
+char		***lexer(char **token);
 char		***malloc_lexer(int size);
 
 // Local
 int			c_local(t_shell shell);
 int			add_local(t_shell shell);
-int			is_args_local(char	**token);
+int			is_args_local(char **token);
 
 // Minishell
 char		*get_name(void);
@@ -139,7 +152,7 @@ void		verify_builtins(t_shell *shell);
 
 // Node
 t_lst		*get_min(t_lst *env);
-t_lst		*remove_min(t_lst	*list, char *var);
+t_lst		*remove_min(t_lst *list, char *var);
 void		add_node(t_shell shell, t_lst *node, t_lst *new_node);
 
 // Quotes_Void
@@ -171,16 +184,10 @@ size_t		final(char *s1, char *set);
 char		*strtrim_mod(char *s1, char *set);
 
 // Syntax
-void		error_syntax(char	*text);
-int			check_prev_next(char	***lex, int	i);
-int			syntax_error_check(char	***lex);
-int			check_operator(char	***lex, int	i);
 int			check_input_redirection(char **text);
 int			check_output_redirection(char **text);
-int			validate_name_file(char	*name);
-int			check_permission(char *text, int permission, char *exit);
-int			check_folder(char *text);
-int			check_file(char *text);
+int			check_here_document(char **text);
+int			check_append_redirection(char **text);
 
 // Token
 char		*id_token(char *token);

@@ -6,13 +6,13 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:56:13 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/25 18:34:59 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/02 09:29:54 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-char	***lexer(char	**token)
+char	***lexer(char **token)
 {
 	char	***lex;
 	int		size;

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/26 20:55:41 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/03 20:20:57 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,24 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(shell.line);
 			make_shell(&shell);
+
+			/* Lembrando que aqui entra sua parte.
+			Para os builtins funcionarem, você tem que
+			usar a estrutura do t_shell:
+
+			shell.command = BUILTIN
+			shell.flag = FLAG
+			shell.content = CONTENT
+
+			Você recebe o shell->lex onde encontra as
+			informações necessárias.
+			lex[][0] -> é o conteúdo de fato.
+			lex[][1] -> é a identificação do conteúdo.
+
+			Assim, quando chamar a função abaixo e
+			verify_builtins vai funcionar corretamente*/
+
+			verify_builtins(&shell);
 			free_shell(shell);
 		}
 		else
@@ -79,6 +97,7 @@ char	*get_name(void)
 void	inicialize(t_shell *shell)
 {
 	shell->line = NULL;
+	shell->lex = NULL;
 	shell->command = NULL;
 	shell->flag = NULL;
 	shell->content = NULL;
