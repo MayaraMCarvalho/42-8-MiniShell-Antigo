@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/03 20:46:59 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:44:50 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int			is_flag_null(t_shell shell);
 char		verify_flags(char *flag, char *pattern);
 
 // Free
+void		free_lex(t_lex *lex);
 void		free_list(t_lst *list);
 void		free_array(char ***token);
 void		free_shell(t_shell shell);
@@ -136,8 +137,11 @@ int			check_pipe(char ***lex, int i);
 int			check_operator(char ***lex, int i);
 
 // Lexer
-char		***lexer(char **token);
+t_lex		*lexical(char **token);
 char		***malloc_lexer(int size);
+char		***make_lexer(t_lex *list);
+void		insert_last_lex(t_lex **lst, t_lex *new);
+t_lex		*insert_front_lex(t_lex *new, char *token, char *type);
 
 // Local
 int			c_local(t_shell shell);
@@ -166,6 +170,11 @@ void		remove_quotes(char **token);
 int			quotes_close(const char *str);
 int			verify_quotes(const char *str);
 
+// Spaces
+int			verify_spaceless(char	*token);
+char		*put_spaces(char *token, char *spaces);
+char		**create_spaces(char *token, int control);
+
 // Split_mod
 int			counter(const char *str, char c);
 char		**ft_split_mod(char const *s, char c);
@@ -191,9 +200,10 @@ int			check_append_redirection(char **text);
 
 // Token
 char		*id_token(char *token);
-int			token_size(char **token);
+int			lexer_size(t_lex *lexer);
 char		***tokenization(t_shell *shell);
-void		copy_token(char ***lex, char **token);
+void		copy_token(char **token, t_lex **lex);
+void		copy_list(char ***lex, t_lex *list, int size);
 
 // Unset
 int			c_unset(t_shell shell);

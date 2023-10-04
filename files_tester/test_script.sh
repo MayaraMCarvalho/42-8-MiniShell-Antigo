@@ -84,6 +84,7 @@ run_test() {
 
 $comp
 clear
+chmod 000 files_tester/out.txt
 echo -e "Iniciando os testes..."
 
 # Testes
@@ -145,13 +146,6 @@ run_test "echo "Teste" >> /pasta/" "bash: /pasta/: Is a directory "
 
 run_test "ls > nome_de_arquivo_com_mais_de_255_caracteres_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt" "bash: nome_de_arquivo_com_mais_de_255_caracteres_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt: File name too long "
 
-# run_test "ls | grep " ""
-# run_test "cat < files_tester/Teste/abc.txt" ""
-# run_test "ls > files_tester/Teste/abc.txt" ""
-
-
-
-
 
 # Calcular porcentagem de acertos
 percentage=$(echo "scale=2; $successful_tests / $total_tests * 100" | bc)
@@ -163,4 +157,5 @@ echo -e "\n\e[33mTestes realizados: \e[94m$total_tests\e[0m\n\e[33mTestes OK: \e
 # ...
 
 echo "Testes concluídos."
+make fclean
 

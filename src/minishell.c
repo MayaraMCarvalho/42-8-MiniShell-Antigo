@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/03 20:20:57 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:38:08 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	main(int argc, char **argv, char **envp)
 
 			Você recebe o shell->lex onde encontra as
 			informações necessárias.
-			lex[][0] -> é o conteúdo de fato.
-			lex[][1] -> é a identificação do conteúdo.
+			lex[i][0] -> é o conteúdo de fato.
+			lex[i][1] -> é a identificação do conteúdo.
 
 			Assim, quando chamar a função abaixo e
 			verify_builtins vai funcionar corretamente*/

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:29:27 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/03 20:43:40 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:43:45 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,66 +17,107 @@ char	***tokenization(t_shell *shell)
 	char	*line;
 	char	***lex;
 	char	**token;
+	t_lex	*lexer;
 
 	line = remove_quotes_void(shell->line);
 	token = ft_split_mod(line, ' ');
 	free(line);
 	verify_expasion(token, shell);
 	remove_quotes(token);
-	//Separar pipes e redirections
-	lex = lexer(token);
+	lexer = lexical(token);
+	lex = make_lexer(lexer);
 	if (!lex)
 		return (NULL);
 	free_array(&token);
+	free_lex(lexer);
 	return (lex);
 }
 
-int	token_size(char **token)
+int	lexer_size(t_lex *lexer)
 {
-	int	i;
+	t_lex	*temp;
+	t_lex	*next;
+	int		i;
 
+	temp = lexer;
 	i = 0;
-	while (token[i])
-		i++;
-	return (i);
-}
-
-void	copy_token(char ***lex, char **token)
-{
-	int	size;
-	int	i;
-
-	i = -1;
-	size = token_size(token);
-	while (++i < size)
+	while (temp != NULL)
 	{
-		lex[i][0] = ft_strdup(token[i]);
-		lex[i][1] = ft_strdup(id_token(token[i]));
+		i++;
+		next = temp->next;
+		temp = next;
 	}
-	lex[i] = NULL;
+	return (i);
 }
 
 char	*id_token(char *token)
 {
 	char	*str;
 
-	str = ft_strrchr(token, '.');
-	if (!strcmp_mod(str, ".txt")
-		|| !strcmp_mod(str, ".c"))
-		return (FILE);
-	else if (ft_strchr(token, ' ') != NULL)
-		return (CONTENT);
-	else if (verify_list(token,
-			ft_split("echo cd pwd export unset env exit clear history", ' ')))
-		return (BUILTIN);
-	else if (verify_commands(token))
-		return (COMMAND);
-	else if (token[0] == '-')
-		return (FLAG);
-	else if (verify_list(token, ft_split("> < >> <<", ' ')))
-		return (OPERATOR);
-	else if (!strcmp_mod(token, "|"))
-		return (PIPE);
-	else
-		return (CONTENT);
+	if (token)
+	{
+		str = ft_strrchr(token, '.');
+		if (!strcmp_mod(str, ".txt")
+			|| !strcmp_mod(str, ".c"))
+			return (FILE);
+		else if (ft_strchr(token, ' ') != NULL)
+			return (CONTENT);
+		else if (verify_list(token,
+				ft_split("echo cd pwd export unset env exit history", ' ')))
+			return (BUILTIN);
+		else if (verify_commands(token))
+			return (COMMAND);
+		else if (token[0] == '-')
+			return (FLAG);
+		else if (verify_list(token, ft_split("> < >> <<", ' ')))
+			return (OPERATOR);
+		else if (!strcmp_mod(token, "|"))
+			return (PIPE);
+		else
+			return (CONTENT);
+	}
+	return (NULL);
+}
+
+void	copy_token(char **token, t_lex **lex)
+{
+	int		i;
+	t_lex	*node;
+	char	**spaces;
+	int		control;
+
+	i = -1;
+	while (token[++i])
+	{
+		control = verify_spaceless(token[i]);
+		if (control)
+		{
+			spaces = create_spaces(token[i], control);
+			if (spaces)
+			{
+				copy_token(spaces, lex);
+				free_array(&spaces);
+			}
+		}
+		else
+		{
+			node = NULL;
+			node = insert_front_lex(node, token[i], id_token(token[i]));
+			insert_last_lex(lex, node);
+		}
+	}
+}
+
+void	copy_list(char ***lex, t_lex *list, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++i < size)
+	{
+		lex[i][0] = ft_strdup(list->token);
+		lex[i][1] = ft_strdup(list->type);
+		list = list->next;
+	}
+	lex[i] = NULL;
 }

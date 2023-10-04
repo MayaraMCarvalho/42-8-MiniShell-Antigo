@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:01:25 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/03 20:06:28 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/03 21:38:01 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,22 @@ void	free_list(t_lst *list)
 		free(temp->var);
 		if (temp->msg)
 			free(temp->msg);
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
+}
+
+void	free_lex(t_lex *lex)
+{
+	t_lex	*temp;
+	t_lex	*next;
+
+	temp = lex;
+	while (temp != NULL)
+	{
+		free(temp->token);
+		free(temp->type);
 		next = temp->next;
 		free(temp);
 		temp = next;

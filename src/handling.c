@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/03 20:45:12 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/04 17:37:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@ void	make_shell(t_shell *shell)
 		shell->lex = tokenization(shell);
 		if (syntax_error_check(shell->lex))
 			return ;
-		/* retirar */
-		int i = -1;
-		while (shell->lex[++i])
-			printf("%-10s %-10s\n", shell->lex[i][1], shell->lex[i][0]);
-		printf("\n");
-		if (!strcmp_mod(shell->lex[0][0], "exit"))
-			shell->command = ft_strdup("exit");
-		/**/
 	}
 }
 
