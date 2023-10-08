@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/04 17:38:08 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/08 16:22:09 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,26 @@ int	main(int argc, char **argv, char **envp)
 		if (shell.line[0] != '\0')
 		{
 			add_history(shell.line);
-			make_shell(&shell);
+			if (make_shell(&shell))
+			{
+				/* Lembrando que aqui entra sua parte.
+				Para os builtins funcionarem, você tem que
+				usar a estrutura do t_shell:
 
-			/* Lembrando que aqui entra sua parte.
-			Para os builtins funcionarem, você tem que
-			usar a estrutura do t_shell:
+				shell.command = BUILTIN
+				shell.flag = FLAG
+				shell.content = CONTENT
 
-			shell.command = BUILTIN
-			shell.flag = FLAG
-			shell.content = CONTENT
+				Você recebe o shell->lex onde encontra as
+				informações necessárias.
+				lex[i][0] -> é o conteúdo de fato.
+				lex[i][1] -> é a identificação do conteúdo.
 
-			Você recebe o shell->lex onde encontra as
-			informações necessárias.
-			lex[i][0] -> é o conteúdo de fato.
-			lex[i][1] -> é a identificação do conteúdo.
-
-			Assim, quando chamar a função abaixo e
-			verify_builtins vai funcionar corretamente*/
-
-			verify_builtins(&shell);
+				Assim, quando chamar a função abaixo e
+				verify_builtins vai funcionar corretamente*/
+				
+				verify_builtins(&shell);
+			}
 			free_shell(shell);
 		}
 		else

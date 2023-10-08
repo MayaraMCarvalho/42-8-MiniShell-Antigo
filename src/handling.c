@@ -6,20 +6,22 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/04 17:37:18 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/08 16:21:46 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-void	make_shell(t_shell *shell)
+int	make_shell(t_shell *shell)
 {
 	if (!check_void(shell->line, 0))
 	{
 		shell->lex = tokenization(shell);
 		if (syntax_error_check(shell->lex))
-			return ;
+			return (0);
+		return (1);
 	}
+	return (0);
 }
 
 int	syntax_error_check(char ***lex)

@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/04 17:44:50 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/08 16:21:25 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void		free_double(char ****array);
 
 // Handling
 void		error_syntax(char *text);
-void		make_shell(t_shell *shell);
+int			make_shell(t_shell *shell);
 int			syntax_error_check(char ***lex);
 int			check_pipe(char ***lex, int i);
 int			check_operator(char ***lex, int i);
