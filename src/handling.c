@@ -6,11 +6,69 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/08 16:21:46 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:27:35 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
+
+char	*make_text(void)
+{
+	char	*text;
+	char	buf[256];
+	char	*path;
+	char	*temp1;
+	char	*temp2;
+
+	temp2 = get_name();
+	path = getcwd(buf, 256);
+	path = ft_substr(path, ft_strlen(getenv("HOME")), ft_strlen(path));
+	temp1 = ft_strjoin(temp2, path);
+	free(path);
+	free(temp2);
+	text = ft_strjoin(temp1, "\001\033[1;0m\002$\001\033[0m\002 ");
+	free(temp1);
+	return (text);
+}
+
+char	*get_name(void)
+{
+	char	*temp1;
+	char	*temp2;
+	char	*user;
+
+	temp1 = ft_strjoin(getenv("LOGNAME"), "@");
+	user = getenv("USERNAME");
+	if (!user)
+		user = getenv("NAME");
+	temp2 = ft_strjoin(temp1, user);
+	free(temp1);
+	temp1 = ft_strjoin("\033[1;33m", temp2);
+	free(temp2);
+	temp2 = ft_strjoin(temp1, "\033[1;0m:\033[1;35m~");
+	free(temp1);
+	return (temp2);
+}
+
+void	inicialize(t_shell *shell)
+{
+	shell->line = NULL;
+	shell->lex = NULL;
+	shell->command = NULL;
+	shell->flag = NULL;
+	shell->content = NULL;
+}
+
+void	verify_builtins(t_shell *shell)
+{
+	if (shell->command && is_command(*shell))
+	{
+		printf("%s: command not found\n", shell->command);
+		shell->exit_code = 127;
+	}
+	else
+		shell->exit_code = 0;
+}
 
 int	make_shell(t_shell *shell)
 {
@@ -22,59 +80,4 @@ int	make_shell(t_shell *shell)
 		return (1);
 	}
 	return (0);
-}
-
-int	syntax_error_check(char ***lex)
-{
-	int	i;
-	int	check;
-
-	i = -1;
-	check = 0;
-	while (lex[++i] && check == 0)
-	{
-		if (!strcmp_mod(lex[i][1], PIPE))
-			check = check_pipe(lex, i);
-		else if (!strcmp_mod(lex[i][1], OPERATOR))
-			check = check_operator(lex, i);
-	}
-	return (check);
-}
-
-int	check_pipe(char ***lex, int i)
-{
-	int	check;
-
-	check = 0;
-	if ((i == 0 || !lex[i + 1] || check_prev_next(lex, i)) && ++check)
-		error_syntax(lex[i][0]);
-	return (check);
-}
-
-int	check_operator(char ***lex, int i)
-{
-	int	check;
-
-	check = 0;
-	if (lex[i + 1])
-	{
-		check = check_prev_next(lex, i);
-		if (check)
-			error_syntax(lex[i + 1][0]);
-	}
-	if (!check && !strcmp_mod(lex[i][0], "<"))
-		check = check_input_redirection(lex[i + 1]);
-	else if (!check && !strcmp_mod(lex[i][0], ">"))
-		check = check_output_redirection(lex[i + 1]);
-	else if (!check && !strcmp_mod(lex[i][0], "<<"))
-		check = check_here_document(lex[i + 1]);
-	else if (!check && !strcmp_mod(lex[i][0], ">>"))
-		check = check_append_redirection(lex[i + 1]);
-	return (check);
-}
-
-void	error_syntax(char *text)
-{
-	printf("bash: syntax error near unexpected token `%s'\n",
-		text);
 }

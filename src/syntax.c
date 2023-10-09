@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 20:58:03 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/03 20:34:48 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:38:35 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,24 @@ int	check_append_redirection(char **text)
 			check = check_folder(text[0]);
 	}
 	return (check);
+}
+
+void	id_redirection(char ***lex, int i)
+{
+	char	*new_type;
+
+	new_type = NULL;
+	if (!strcmp_mod(lex[i][0], "<"))
+		new_type = INFILE;
+	else if (!strcmp_mod(lex[i][0], ">"))
+		new_type = OUTFILE;
+	else if (!strcmp_mod(lex[i][0], "<<"))
+		new_type = DELIMITER;
+	else if (!strcmp_mod(lex[i][0], ">>"))
+		new_type = APPEND;
+	if (new_type)
+	{
+		free(lex[i][1]);
+		lex[i][1] = ft_strdup(new_type);
+	}
 }

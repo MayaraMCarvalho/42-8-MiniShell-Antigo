@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/08 16:21:25 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:28:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@
 # define BUILTIN "BUILTIN"
 # define CONTENT "CONTENT"
 # define OPERATOR "OPERATOR"
+# define APPEND "APPEND"
+# define INFILE "INFILE"
+# define OUTFILE "OUTFILE"
+# define DELIMITER "DELIMITER"
 
 typedef struct s_lex
 {
@@ -59,12 +63,12 @@ typedef struct s_lst
 
 typedef struct s_shell
 {
+	t_lst		*env;
 	char		*line;
 	char		***lex;
 	char		*command;
 	char		*flag;
 	char		*content;
-	t_lst		*env;
 	int			exit_code;
 }	t_shell;
 
@@ -107,6 +111,7 @@ int			c_exit(t_shell shell);
 int			c_clear(t_shell shell);
 
 // Expansion
+char		*put_final_sign(char *str);
 int			verify_literal(char *token);
 char		*get_var(char *token, t_shell *shell);
 char		*apart_var(t_shell *shell, char *token);
@@ -130,11 +135,11 @@ void		free_shell(t_shell shell);
 void		free_double(char ****array);
 
 // Handling
-void		error_syntax(char *text);
+char		*get_name(void);
+char		*make_text(void);
 int			make_shell(t_shell *shell);
-int			syntax_error_check(char ***lex);
-int			check_pipe(char ***lex, int i);
-int			check_operator(char ***lex, int i);
+void		inicialize(t_shell *shell);
+void		verify_builtins(t_shell *shell);
 
 // Lexer
 t_lex		*lexical(char **token);
@@ -147,12 +152,6 @@ t_lex		*insert_front_lex(t_lex *new, char *token, char *type);
 int			c_local(t_shell shell);
 int			add_local(t_shell shell);
 int			is_args_local(char **token);
-
-// Minishell
-char		*get_name(void);
-char		*make_text(void);
-void		inicialize(t_shell *shell);
-void		verify_builtins(t_shell *shell);
 
 // Node
 t_lst		*get_min(t_lst *env);
@@ -192,10 +191,17 @@ size_t		init(char *s1, char *set);
 size_t		final(char *s1, char *set);
 char		*strtrim_mod(char *s1, char *set);
 
+// Syntax_error
+void		error_syntax(char *text);
+int			check_pipe(char ***lex, int i);
+int			syntax_error_check(char ***lex);
+int			check_operator(char ***lex, int i);
+
 // Syntax
+int			check_here_document(char **text);
+void		id_redirection(char ***lex, int i);
 int			check_input_redirection(char **text);
 int			check_output_redirection(char **text);
-int			check_here_document(char **text);
 int			check_append_redirection(char **text);
 
 // Token

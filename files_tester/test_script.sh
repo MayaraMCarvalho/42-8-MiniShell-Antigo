@@ -156,6 +156,6 @@ echo -e "\n\e[33mTestes realizados: \e[94m$total_tests\e[0m\n\e[33mTestes OK: \e
 # Limpar recursos, se necessário
 # ...
 
-echo "Testes concluídos."
-make fclean
+echo -e "Testes concluídos.\n"
+make fclean > /dev/null
 

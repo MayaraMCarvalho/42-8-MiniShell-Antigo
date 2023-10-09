@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:23:21 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/26 19:02:21 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:50:49 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	*apart_var(t_shell *shell, char *token)
 			str = ft_strdup(temp2);
 			free(temp2);
 		}
+		if (token[ft_strlen(token) - 1] == '$')
+			str = put_final_sign(str);
 		free_array(&split);
 	}
 	return (str);
@@ -117,4 +119,15 @@ char	*get_var(char *token, t_shell *shell)
 		var = ft_strdup(final);
 	free(final);
 	return (var);
+}
+
+char	*put_final_sign(char *str)
+{
+	char	*temp;
+
+	temp = ft_strjoin(str, "$");
+	free(str);
+	str = ft_strdup(temp);
+	free(temp);
+	return (str);
 }
