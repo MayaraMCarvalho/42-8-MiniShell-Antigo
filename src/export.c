@@ -6,23 +6,25 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:36:10 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 17:06:51 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:46:25 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	c_export(t_shell shell)
+int	c_export(t_shell *shell)
 {
-	if (!strcmp_mod(shell.command, "export"))
+	if (!strcmp_mod(shell->command, "export"))
 	{
-		update_(shell);
+		update_(*shell);
 		if (!is_flag_null(shell))
 			return (1);
-		if (!shell.content
-			|| (shell.content[0] == '$'
-				&& !find_arg(shell, shell.content + 1)))
-			sort_export(shell.env);
+		if (!shell->content || (shell->content[0] == '$'
+				&& !find_arg(*shell, shell->content + 1)))
+		{
+			sort_export(shell->env);
+			shell->exit_code = 0;
+		}
 		else
 			apart_args(shell, ' ', add_export);
 		return (1);
@@ -64,7 +66,7 @@ void	sort_export(t_lst *env)
 	free_list(env_order);
 }
 
-int	add_export(t_shell shell)
+int	add_export(t_shell *shell)
 {
 	t_lst	*node;
 	t_lst	*new_node;
@@ -73,16 +75,16 @@ int	add_export(t_shell shell)
 
 	if (is_args(shell))
 	{
-		var = strchr_rev(shell.content, '=');
+		var = strchr_rev(shell->content, '=');
 		if (!var)
-			var = ft_strdup(shell.content);
+			var = ft_strdup(shell->content);
 		if (!var)
 			return (0);
-		msg = strchr_mod(shell.content, '=');
-		node = find_arg(shell, var);
+		msg = strchr_mod(shell->content, '=');
+		node = find_arg(*shell, var);
 		new_node = NULL;
 		new_node = insert_front(new_node, var, msg, GLOBAL);
-		add_node(shell, node, new_node);
+		add_node(*shell, node, new_node);
 		free_list(new_node);
 		free(var);
 	}

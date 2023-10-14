@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:52:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/09 14:28:18 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:37:38 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define LOCAL 2
 # define CLEAR_SCREEN "\033[2J\033[1;1H"
 
+# define VAR "VAR"
 # define FLAG "FLAG"
 # define FILE "FILE"
 # define PIPE "PIPE"
@@ -73,58 +74,60 @@ typedef struct s_shell
 }	t_shell;
 
 // Args
-int			is_args(t_shell shell);
+int			is_args(t_shell *shell);
 t_lst		*find_arg(t_shell shell, char *var);
-void		apart_args(t_shell shell, char c, int (*function)(t_shell));
+void		apart_args(t_shell *shell, char c, int (*function)(t_shell *));
+int			verify_local(t_shell *shell, char **split, int (*function)(t_shell *));
 
 // Cd
-int			c_cd(t_shell shell);
+int			c_cd(t_shell *shell);
 void		exe_cd(t_shell shell);
+void		get_oldpwd(t_shell *shell);
 void		update_var(t_shell shell, char *name, char *value);
 
 // Check
-int			check_file(char *text);
-int			check_folder(char *text);
-int			check_name_file(char *name);
+int			check_file(char *text, t_shell *shell);
+int			check_folder(char *text, t_shell *shell);
+int			check_name_file(char *name, t_shell *shell);
 int			check_prev_next(char ***lex, int i);
-int			check_permission(char *text, int permission, char *exit);
+int			check_permission(char *text, int permission, char *exit, t_shell *shell);
 
 // Commands
-int			c_pwd(t_shell shell);
+int			c_pwd(t_shell *shell);
 void		update_(t_shell shell);
-int			c_history(t_shell shell);
-int			is_command(t_shell shell);
+int			c_history(t_shell *shell);
+int			is_command(t_shell *shell);
 
 // Echo
-int			c_echo(t_shell shell);
-int			print_echo(t_shell shell);
+int			c_echo(t_shell *shell);
+int			print_flag(t_shell shell);
+int			print_echo(t_shell *shell);
 
 // Env
-int			c_env(t_shell shell);
+int			c_env(t_shell *shell);
 t_lst		*make_list(char **envp);
 t_lst		*duplicate_env(t_lst *env);
 void		insert_last(t_lst **lst, t_lst *new);
 t_lst		*insert_front(t_lst *new, char *var, char *msg, int type);
 
 // Exit
-int			c_exit(t_shell shell);
-int			c_clear(t_shell shell);
+int			c_exit(t_shell *shell);
+int			c_clear(t_shell *shell);
 
 // Expansion
-char		*put_final_sign(char *str);
+
 int			verify_literal(char *token);
-char		*get_var(char *token, t_shell *shell);
-char		*apart_var(t_shell *shell, char *token);
-void		verify_expasion(char **token, t_shell *shell);
+char		*join_expansion(t_shell *shell, char *token);
+void		verify_expansion(char **token, t_shell *shell);
 
 // Export
-int			c_export(t_shell shell);
+int			c_export(t_shell *shell);
 void		sort_export(t_lst *env);
 void		print_export(t_lst *env);
-int			add_export(t_shell shell);
+int			add_export(t_shell *shell);
 
 // Flags
-int			is_flag_null(t_shell shell);
+int			is_flag_null(t_shell *shell);
 char		verify_flags(char *flag, char *pattern);
 
 // Free
@@ -149,9 +152,9 @@ void		insert_last_lex(t_lex **lst, t_lex *new);
 t_lex		*insert_front_lex(t_lex *new, char *token, char *type);
 
 // Local
-int			c_local(t_shell shell);
-int			add_local(t_shell shell);
-int			is_args_local(char **token);
+int			c_local(t_shell *shell);
+int			add_local(t_shell *shell);
+int			is_args_local(char **split, t_shell *shell);
 
 // Node
 t_lst		*get_min(t_lst *env);
@@ -192,17 +195,17 @@ size_t		final(char *s1, char *set);
 char		*strtrim_mod(char *s1, char *set);
 
 // Syntax_error
-void		error_syntax(char *text);
-int			check_pipe(char ***lex, int i);
-int			syntax_error_check(char ***lex);
-int			check_operator(char ***lex, int i);
+void		error_syntax(char *text, t_shell *shell);
+int			check_pipe(char ***lex, int i, t_shell *shell);
+int			syntax_error_check(char ***lex, t_shell *shell);
+int			check_operator(char ***lex, int i, t_shell *shell);
 
 // Syntax
-int			check_here_document(char **text);
+int			check_here_document(char **text, t_shell *shell);
 void		id_redirection(char ***lex, int i);
-int			check_input_redirection(char **text);
-int			check_output_redirection(char **text);
-int			check_append_redirection(char **text);
+int			check_input_redirection(char **text, t_shell *shell);
+int			check_output_redirection(char **text, t_shell *shell);
+int			check_append_redirection(char **text, t_shell *shell);
 
 // Token
 char		*id_token(char *token);
@@ -212,16 +215,22 @@ void		copy_token(char **token, t_lex **lex);
 void		copy_list(char ***lex, t_lex *list, int size);
 
 // Unset
-int			c_unset(t_shell shell);
-int			exe_unset(t_shell shell);
+int			c_unset(t_shell *shell);
+int			exe_unset(t_shell *shell);
 
 // Utils
 int			isalnum_mod(char *c);
 char		*strchr_mod(const char *str, int c);
 char		*strchr_rev(const char *str, int c);
 
+// Var
+char		*put_final_sign(char *str);
+char		*get_var(char *token, t_shell *shell);
+char		*apart_var(t_shell *shell, char *token);
+
 // Verify
 int			verify_commands(char *token);
+int			verify_exceptions(char *token);
 int			verify_list(char *token, char **list);
 
 #endif

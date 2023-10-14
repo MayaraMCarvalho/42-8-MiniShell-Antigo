@@ -6,58 +6,61 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/03 12:06:57 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/02 09:29:32 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:30:45 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	c_local(t_shell shell)
+int	c_local(t_shell *shell)
 {
-	if (shell.content == NULL && ft_strchr(shell.command, '='))
+	if (!shell->content && ft_strchr(shell->command, '='))
 	{
-		shell.content = shell.command;
+		shell->content = ft_strdup(shell->command);
 		apart_args(shell, ' ', add_local);
 		return (1);
 	}
 	return (0);
 }
 
-int	add_local(t_shell shell)
+int	add_local(t_shell *shell)
 {
 	t_lst	*node;
 	t_lst	*new_node;
 	char	*var;
 	char	*msg;
 
-	var = strchr_rev(shell.content, '=');
+	// Colocar if (is_args(shell)) para funcionar igual export?
+	// Entender is_args_local e aparts_args
+	var = strchr_rev(shell->content, '=');
 	if (!var)
-		var = ft_strdup(shell.content);
+		var = ft_strdup(shell->content);
 	if (!var)
 		return (0);
-	msg = strchr_mod(shell.content, '=');
-	node = find_arg(shell, var);
+	msg = strchr_mod(shell->content, '=');
+	node = find_arg(*shell, var);
 	new_node = NULL;
 	if (node)
 		new_node = insert_front(new_node, var, msg, GLOBAL);
 	else
 		new_node = insert_front(new_node, var, msg, LOCAL);
-	add_node(shell, node, new_node);
+	add_node(*shell, node, new_node);
 	free_list(new_node);
 	free(var);
 	return (0);
 }
 
-int	is_args_local(char **split)
+int	is_args_local(char **split, t_shell *shell)
 {
 	int	i;
 
 	i = -1;
-	while (split[++i])
+	while (split[++i] && shell->env)
 	{
 		if (ft_strchr (split[i], '=') == NULL)
 		{
 			printf("%s: command not found\n", split[i]);
+			shell->exit_code = 127;
 			return (1);
 		}
 	}

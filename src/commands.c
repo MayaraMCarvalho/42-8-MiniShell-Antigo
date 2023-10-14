@@ -6,13 +6,13 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 15:13:26 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/15 18:35:42 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:06:24 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	is_command(t_shell shell)
+int	is_command(t_shell *shell)
 {
 	if (c_echo(shell))
 		return (0);
@@ -39,26 +39,17 @@ int	is_command(t_shell shell)
 
 void	update_(t_shell shell)
 {
-	char	*var;
-
 	if (shell.content == NULL && ft_strchr(shell.command, '='))
 		update_var(shell, "_", NULL);
 	else
-	{
-		var = ft_strjoin("/usr/bin/", shell.command);
-		if (var)
-		{
-			update_var(shell, "_", var);
-			free(var);
-		}
-	}
+		update_var(shell, "_", shell.command);
 }
 
-int	c_pwd(t_shell shell)
+int	c_pwd(t_shell *shell)
 {
 	char	buf[256];
 
-	if (!strcmp_mod(shell.command, "pwd"))
+	if (!strcmp_mod(shell->command, "pwd"))
 	{
 		if (!is_flag_null(shell))
 			return (1);
@@ -68,13 +59,13 @@ int	c_pwd(t_shell shell)
 	return (0);
 }
 
-int	c_history(t_shell shell)
+int	c_history(t_shell *shell)
 {
 	HISTORY_STATE	*myhist;
 	HIST_ENTRY		**mylist;
 	int				i;
 
-	if (!strcmp_mod(shell.command, "history"))
+	if (!strcmp_mod(shell->command, "history"))
 	{
 		myhist = history_get_history_state();
 		mylist = history_list();

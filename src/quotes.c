@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 18:59:02 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/25 17:49:26 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:42:15 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	remove_quotes(char **token)
 	{
 		tam = quotes_close((*token));
 		test = ft_strchr(*token, '=');
-		if (tam > 0 && (control || !test || (test && test[1] != '"')))
+		if (tam > 0 && (control || !test))
 		{
 			tam = ft_strlen(*token) - (pair_quotes * tam);
 			temp = (char *) malloc ((tam + 1) * sizeof(char));

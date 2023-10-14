@@ -6,39 +6,44 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 20:02:42 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 20:09:04 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:23:40 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	c_cd(t_shell shell)
+int	c_cd(t_shell *shell)
 {
-	t_lst	*var;
-
-	if (!strcmp_mod(shell.command, "cd"))
+	if (!strcmp_mod(shell->command, "cd"))
 	{
-		update_(shell);
-		if (!is_flag_null(shell))
+		update_(*shell);
+		if (strcmp_mod(shell->flag, "-") && !is_flag_null(shell))
 			return (1);
-		if ((!shell.content || !strcmp_mod(shell.content, "~/")
-				|| !strcmp_mod(shell.content, "~")) && !shell.flag)
-			shell.content = getenv("HOME");
-		else if (!strcmp_mod(shell.flag, "-"))
-		{
-			var = find_arg(shell, "OLDPWD");
-			if (var)
-			{
-				shell.content = var->msg;
-				printf("%s\n", shell.content);
-			}
-			else
-				printf("bash: cd: OLDPWD not set\n");
-		}
-			exe_cd(shell);
+		if (!shell->content && !shell->flag)
+			shell->content = ft_strdup(getenv("HOME"));
+		else if (!strcmp_mod(shell->flag, "-"))
+			get_oldpwd(shell);
+		exe_cd(*shell);
 		return (1);
 	}
 	return (0);
+}
+
+void	get_oldpwd(t_shell *shell)
+{
+	t_lst	*var;
+
+	var = find_arg(*shell, "OLDPWD");
+	if (var)
+	{
+		shell->content = ft_strdup(var->msg);
+		printf("%s\n", shell->content);
+	}
+	else
+	{
+		printf("bash: cd: OLDPWD not set\n");
+		shell->exit_code = 1;
+	}
 }
 
 void	exe_cd(t_shell shell)
@@ -55,7 +60,10 @@ void	exe_cd(t_shell shell)
 	{
 		control = chdir(shell.content);
 		if (control == -1)
-		printf("bash: cd: %s: No such file or directory\n", shell.content);
+		{
+			printf("bash: cd: %s: No such file or directory\n", shell.content);
+			shell.exit_code = 1;
+		}
 	}
 	if (control == 0)
 	{

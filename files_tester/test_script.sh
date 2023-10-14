@@ -146,6 +146,10 @@ run_test "echo "Teste" >> /pasta/" "bash: /pasta/: Is a directory "
 
 run_test "ls > nome_de_arquivo_com_mais_de_255_caracteres_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt" "bash: nome_de_arquivo_com_mais_de_255_caracteres_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt: File name too long "
 
+run_test "echo -nnnn-n -n teste" "-nnnn-n -n teste "
+run_test "echo - teste" "- teste "
+run_test "echo -nnann -n teste" "-nnann -n teste "
+
 
 # Calcular porcentagem de acertos
 percentage=$(echo "scale=2; $successful_tests / $total_tests * 100" | bc)

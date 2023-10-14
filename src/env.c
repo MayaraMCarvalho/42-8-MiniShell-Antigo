@@ -6,30 +6,35 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 16:36:46 by macarval          #+#    #+#             */
-/*   Updated: 2023/06/03 19:47:31 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:05:47 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-int	c_env(t_shell shell)
+int	c_env(t_shell *shell)
 {
-	if (!strcmp_mod(shell.command, "env"))
+	t_lst		*temp;
+
+	if (!strcmp_mod(shell->command, "env"))
 	{
-		update_(shell);
+		update_(*shell);
 		if (!is_flag_null(shell))
 			return (1);
-		if (shell.content != NULL)
+		if (shell->content != NULL)
 		{
 			printf("%s: ‘%s’: No such file or directory\n",
-				shell.command, shell.content);
+				shell->command, shell->content);
+			shell->exit_code = 127;
 			return (1);
 		}
-		while (shell.env != NULL)
+		temp = shell->env;
+		while (temp != NULL)
 		{
-			if (shell.env->type != LOCAL && shell.env->msg)
-				printf("%s=%s\n", shell.env->var, shell.env->msg);
-			shell.env = shell.env->next;
+			if (temp->type != LOCAL && temp->msg)
+				printf("%s=%s\n", temp->var, temp->msg);
+			temp = temp->next;
+			shell->exit_code = 0;
 		}
 		return (1);
 	}

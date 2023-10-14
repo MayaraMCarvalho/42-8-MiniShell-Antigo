@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 20:25:32 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/04 14:41:25 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/13 19:43:03 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_prev_next(char ***lex, int i)
 	return (0);
 }
 
-int	check_folder(char *text)
+int	check_folder(char *text, t_shell *shell)
 {
 	char	*name_folder;
 	int		check;
@@ -37,14 +37,14 @@ int	check_folder(char *text)
 				- ft_strlen(name_folder) + 1);
 		if (name_folder)
 		{
-			check = check_permission(name_folder, S_IWUSR, text);
+			check = check_permission(name_folder, S_IWUSR, text, shell);
 			free(name_folder);
 		}
 	}
 	return (check);
 }
 
-int	check_permission(char *text, int permission, char *exit)
+int	check_permission(char *text, int permission, char *exit, t_shell *shell)
 {
 	int			check;
 	struct stat	state;
@@ -61,10 +61,12 @@ int	check_permission(char *text, int permission, char *exit)
 		else if (!name && !(state.st_mode & permission) && ++check)
 			printf("bash: %s: Permission denied\n", exit);
 	}
+	if (check && shell->env)
+		shell->exit_code = 1;
 	return (check);
 }
 
-int	check_file(char *text)
+int	check_file(char *text, t_shell *shell)
 {
 	int			tam;
 	int			check;
@@ -77,10 +79,12 @@ int	check_file(char *text)
 	else if (!stat(text, &state)
 		&& !(state.st_mode & S_IWUSR) && ++check)
 		printf("bash: %s: Permission denied\n", text);
+	if (check && shell->env)
+		shell->exit_code = 1;
 	return (check);
 }
 
-int	check_name_file(char *name)
+int	check_name_file(char *name, t_shell *shell)
 {
 	int		i;
 	char	letter[2];
@@ -95,7 +99,7 @@ int	check_name_file(char *name)
 	}
 	if (letter[0])
 	{
-		error_syntax(letter);
+		error_syntax(letter, shell);
 		return (1);
 	}
 	return (0);

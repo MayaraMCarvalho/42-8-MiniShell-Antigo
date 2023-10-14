@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 11:35:31 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/25 16:29:20 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:47:31 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,16 @@ int	verify_list(char *token, char **list)
 		}
 	}
 	free_array(&list);
+	return (0);
+}
+
+int	verify_exceptions(char *token)
+{
+	if (!strcmp_mod(token, "") || ft_strchr(token, ' ') != NULL
+		|| ft_strchr(token, ' ') != NULL || ft_strnstr(token, "./", 2)
+		|| !strcmp_mod(token, ".") || !strcmp_mod(token, "..")
+		|| !strcmp_mod(token, "./") || !strcmp_mod(token, "../")
+		|| ft_strnstr(token, "../", 3))
+		return (1);
 	return (0);
 }

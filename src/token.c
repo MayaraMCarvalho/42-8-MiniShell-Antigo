@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 18:29:27 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/04 17:43:45 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 14:13:29 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	***tokenization(t_shell *shell)
 	line = remove_quotes_void(shell->line);
 	token = ft_split_mod(line, ' ');
 	free(line);
-	verify_expasion(token, shell);
+	verify_expansion(token, shell);
 	remove_quotes(token);
 	lexer = lexical(token);
 	lex = make_lexer(lexer);
@@ -52,15 +52,14 @@ int	lexer_size(t_lex *lexer)
 
 char	*id_token(char *token)
 {
-	char	*str;
-
 	if (token)
 	{
-		str = ft_strrchr(token, '.');
-		if (!strcmp_mod(str, ".txt")
-			|| !strcmp_mod(str, ".c"))
+		if (!strcmp_mod(ft_strrchr(token, '.'), ".txt")
+			|| !strcmp_mod(ft_strrchr(token, '.'), ".c"))
 			return (FILE);
-		else if (ft_strchr(token, ' ') != NULL)
+		else if (ft_strchr(token, '='))
+			return (VAR);
+		else if (verify_exceptions(token))
 			return (CONTENT);
 		else if (verify_list(token,
 				ft_split("echo cd pwd export unset env exit history", ' ')))

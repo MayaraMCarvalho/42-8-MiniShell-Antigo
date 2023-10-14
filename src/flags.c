@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 16:49:16 by macarval          #+#    #+#             */
-/*   Updated: 2023/09/08 16:42:14 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/14 13:48:51 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,40 @@ char	verify_flags(char *flag, char *pattern)
 
 	i = 0;
 	letter = '\0';
-	if (flag != NULL)
+	if (flag)
 	{
-		while (flag[++i] && letter == '\0')
+		if (flag[0] == '-')
+			i++;
+		if (!flag[i])
+			return ('-');
+		while (flag[i] && letter == '\0')
 		{
 			if (!ft_strchr(pattern, flag[i]))
 				letter = flag[i];
+			i++;
 		}
 	}
 	return (letter);
 }
 
-int	is_flag_null(t_shell shell)
+int	is_flag_null(t_shell *shell)
 {
 	char	letter;
 
-	letter = verify_flags(shell.flag, NULL);
+	letter = verify_flags(shell->flag, NULL);
 	if (letter != '\0')
 	{
-		if (!strcmp_mod(shell.command, "env")
-			|| !strcmp_mod(shell.command, "clear"))
-			printf("%s: invalid option -- '%c'\n", shell.command, letter);
+		if (!strcmp_mod(shell->command, "env")
+			|| !strcmp_mod(shell->command, "clear"))
+		{
+			printf("%s: invalid option -- '%c'\n", shell->command, letter);
+			shell->exit_code = 1;
+		}
 		else
-			printf("bash: %s: -%c: invalid option\n", shell.command, letter);
+		{
+			printf("bash: %s: -%c: invalid option\n", shell->command, letter);
+			shell->exit_code = 2;
+		}
 		return (0);
 	}
 	return (1);

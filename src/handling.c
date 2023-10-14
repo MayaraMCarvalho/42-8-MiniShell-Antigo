@@ -6,7 +6,7 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:20:05 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/09 14:27:35 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:58:18 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,27 @@
 
 char	*make_text(void)
 {
-	char	*text;
+	char	*home;
 	char	buf[256];
 	char	*path;
-	char	*temp1;
-	char	*temp2;
+	char	*temp;
+	char	*text;
 
-	temp2 = get_name();
-	path = getcwd(buf, 256);
-	path = ft_substr(path, ft_strlen(getenv("HOME")), ft_strlen(path));
-	temp1 = ft_strjoin(temp2, path);
+	path = ft_strdup(getcwd(buf, 256));
+	home = getenv("HOME");
+	if (ft_strnstr(path, home, ft_strlen(home)) || !strcmp_mod(path, home))
+	{
+		temp = ft_substr(path, ft_strlen(home), ft_strlen(path));
+		free(path);
+		path = ft_strdup(temp);
+		free(temp);
+	}
+	text = get_name();
+	temp = ft_strjoin(text, path);
 	free(path);
-	free(temp2);
-	text = ft_strjoin(temp1, "\001\033[1;0m\002$\001\033[0m\002 ");
-	free(temp1);
+	free(text);
+	text = ft_strjoin(temp, "\001\033[1;0m\002$\001\033[0m\002 ");
+	free(temp);
 	return (text);
 }
 
@@ -61,13 +68,11 @@ void	inicialize(t_shell *shell)
 
 void	verify_builtins(t_shell *shell)
 {
-	if (shell->command && is_command(*shell))
+	if (shell->command && is_command(shell))
 	{
 		printf("%s: command not found\n", shell->command);
 		shell->exit_code = 127;
 	}
-	else
-		shell->exit_code = 0;
 }
 
 int	make_shell(t_shell *shell)
@@ -75,7 +80,7 @@ int	make_shell(t_shell *shell)
 	if (!check_void(shell->line, 0))
 	{
 		shell->lex = tokenization(shell);
-		if (syntax_error_check(shell->lex))
+		if (syntax_error_check(shell->lex, shell))
 			return (0);
 		return (1);
 	}
