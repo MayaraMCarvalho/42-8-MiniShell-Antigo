@@ -6,11 +6,13 @@
 /*   By: macarval <macarval@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 18:02:28 by macarval          #+#    #+#             */
-/*   Updated: 2023/10/14 14:51:00 by macarval         ###   ########.fr       */
+/*   Updated: 2023/10/16 11:56:24 by macarval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "../libs/libft/libft.h"
 #include "../headers/minishell.h"
+
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -30,10 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			add_history(shell.line);
 			if (make_shell(&shell))
-			{
-				// Colocar resto do código
-				// E nele chamar verify_builtins
-			}
+				verify_builtins(&shell);
 			free_shell(shell);
 		}
 		else
